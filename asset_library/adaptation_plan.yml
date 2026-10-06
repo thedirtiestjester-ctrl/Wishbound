@@ -1,0 +1,114 @@
+version: 1
+project: Wishbound
+purpose: "Turn external image sources into original adult-only Wishbound production targets without losing useful technical grouping."
+
+uploaded_archive_adaptation:
+  cover_or_index:
+    target_role: reference_index
+    ship_raw: false
+    replacement: "Original Wishbound route/CG thumbnail or catalog cover."
+  portrait_scene_or_sprite_candidate:
+    target_role: character_or_event_reference
+    ship_raw: false
+    replacement: "Original adult Wishbound sprite, portrait, pose, or event composition."
+  landscape_scene_or_cg:
+    target_role: location_or_event_reference
+    ship_raw: false
+    replacement: "Original Wishbound background or event CG with adult setting."
+  square_or_mixed_cg:
+    target_role: event_reference
+    ship_raw: false
+    replacement: "Original Wishbound CG, phone photo, gallery image, or cropped route illustration."
+  layer_or_overlay_candidate:
+    target_role: compositing_reference
+    ship_raw: false
+    replacement: "Original alpha layer for outfit, expression, effect, foreground, or transformation sequence."
+
+student_transfer_adaptation:
+  character_expression:
+    target_role: character_expression
+    route_use: "adult characters only"
+    normalized_slots: [neutral, smile, amused, embarrassed, worried, shocked, annoyed, angry, flirt, tired]
+  character_blush:
+    target_role: emotion_overlay
+    normalized_slots: [none, light, medium, strong]
+  character_expression_mutation:
+    target_role: transformation_or_style_variant
+    normalized_slots: [hair_change, makeup_change, altered_features, reality_glitch]
+  character_outfit_layer:
+    target_role: wardrobe
+    normalized_slots: [sleepwear, casual, work, evening, active, date, outerwear]
+  character_accessory_layer:
+    target_role: accessory
+    normalized_slots: [glasses, jewelry, bag, hat, phone, work_item]
+  background:
+    target_role: location
+    adult_retarget:
+      school_classroom: college_classroom_or_training_room
+      school_hallway: office_or_college_hallway
+      school_rooftop: apartment_or_club_rooftop
+      school_clubroom: studio_or_break_room
+      family_home: adult_family_home
+      apartment: apartment
+      mall: mall
+      park: park
+      city: city
+      office: office
+      cafe: cafe
+  event_cg:
+    target_role: story_event
+    policy: "Composition/reference unless asset provenance is explicitly cleared."
+  animation_asset:
+    target_role: effect
+    wishbound_uses: [wish_flash, reality_rewrite, memory_bleed, possession_haze, weather, ambience]
+  transition_asset:
+    target_role: transition
+    wishbound_uses: [rewrite_cut, memory_flash, route_change, dream_transition]
+  phone_ui_icon:
+    target_role: phone_ui
+    wishbound_uses: [messages, contacts, gallery, calendar, social, calls]
+  thumbnail:
+    target_role: gallery_thumbnail
+  dialogue_action_graphic:
+    target_role: ui_feedback
+  misc_visual:
+    target_role: review_required
+
+route_asset_bundles:
+  avery:
+    identity_theme: social_event_planner
+    location_core: [apartment, bathroom, closet, event_venue, city]
+    wardrobe_core: [sleepwear, casual, work, evening, date]
+    expression_core: [neutral, confident, embarrassed, flirt, shocked, worried]
+  mia:
+    identity_theme: married_professional
+    location_core: [apartment, bathroom, closet, office_lobby, restaurant]
+    wardrobe_core: [sleepwear, work, casual, date, formal]
+    expression_core: [neutral, composed, embarrassed, shocked, worried, affectionate]
+  chloe:
+    identity_theme: public_creator
+    location_core: [apartment, bathroom, closet, photo_studio, city]
+    wardrobe_core: [sleepwear, casual, creator, photoshoot, evening]
+    expression_core: [neutral, camera_smile, embarrassed, playful, shocked, worried]
+  naomi:
+    identity_theme: tattoo_artist
+    location_core: [apartment, bathroom, closet, tattoo_studio, nightlife]
+    wardrobe_core: [sleepwear, casual, studio, evening]
+    expression_core: [neutral, amused, skeptical, embarrassed, flirt, annoyed]
+  lila:
+    identity_theme: pastry_chef
+    location_core: [apartment, bathroom, closet, cafe, kitchen, city]
+    wardrobe_core: [sleepwear, casual, chef, date]
+    expression_core: [neutral, warm, embarrassed, shocked, worried, affectionate]
+  rhea:
+    identity_theme: dj_club_manager
+    location_core: [apartment, bathroom, closet, rooftop_club, backstage, city_night]
+    wardrobe_core: [sleepwear, casual, club, performance, evening]
+    expression_core: [neutral, confident, flirt, embarrassed, annoyed, shocked]
+
+publication_gates:
+  - "Rights status must be cleared."
+  - "Character must be explicitly adult for mature-route use."
+  - "No age-ambiguous sexual source material."
+  - "No third-party branding retained unless separately permitted."
+  - "Wishbound filename and route role must be assigned."
