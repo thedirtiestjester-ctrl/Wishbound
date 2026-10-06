@@ -1,36 +1,33 @@
 # Wishbound Asset Library
 
-This directory is the source-of-truth for asset classification and provenance.
+This legacy catalog layer now feeds the canonical Wishbound-native `AstRef/` system.
 
-## Tracked in Git
+## Public metadata
 
-- `source_catalog.yml` — every external source currently known to Wishbound.
-- `student_transfer_mapping.yml` — how Student Transfer's documented asset structure maps into Wishbound.
-- `rights_overrides.example.yml` — template for explicitly clearing individual assets or asset families.
-- Generated catalog files may be committed only when they contain metadata, hashes, and labels — not uncleared copyrighted image bytes.
+Public files use neutral `WBPOOL-*` pool IDs and Wishbound production roles. They do not preserve prior story, character, scene, or relationship context.
 
-## Local-only raw assets
+## Private provenance
 
-Put local source material under:
+Any original archive/source path needed for administration belongs only under:
 
 ```
-assets_inbox/
-  uploaded/
-    gonna_be.zip
-    inga_ouhou.zip
-    xchange2r.zip
-  student-transfer/
-    game/images/...
+AstRef/private_provenance/
 ```
 
-Then run:
+That directory is Git-ignored and never packaged into the game.
+
+## Canonical workflow
+
+Use:
 
 ```bash
-python tools/asset_intake.py assets_inbox --output asset_build
+python tools/ingest_wbasts_to_astref.py <archive parts...>
 ```
 
-The intake tool scans every image, assigns a stable Wishbound asset ID, classifies it, records provenance, and produces a normalized manifest. Raw local-only material is deliberately ignored by Git.
+The importer generates:
 
-## Publication rule
+- `AstRef/manifests/wishbound_assets.csv`
+- `AstRef/manifests/import_summary.json`
+- local-only `AstRef/private_provenance/provenance.csv`
 
-An asset is shipped in `game/images/` only when its rights state is `cleared` and its content is appropriate for the adult-only Wishbound cast. Everything else remains reference/local-only and can still have a Wishbound replacement target.
+Game code should consume Wishbound IDs/roles, not source metadata.
