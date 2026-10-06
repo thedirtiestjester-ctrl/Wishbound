@@ -1,23 +1,18 @@
-version: 1
+version: 2
 policy: >
-  Ownership/redistribution permission does not permit publishing sexual content
-  involving minors or age-ambiguous student characters.
+  Wishbound recontextualization changes narrative identity, not the visual content itself.
+  Assets are reviewed by what is visibly depicted. Anything that cannot be safely treated
+  as adult/nonsexual or otherwise allowed remains unpublished.
 
-excluded_sources:
-  - source_id: 3696570_a7b0c3fc7d
-    title: "[GROOVER] Gonna be??"
-    reason: "Official description identifies an 18+ game centered on infiltration of a private girls' school; the uploaded full-rip CG set cannot be safely treated as adult-only."
-  - source_id: 4114637_452fc8a874
-    title: "Motto! Haramase! Honoo no Oppai Isekai Oppai Spy Gakuen!"
-    reason: "Official character pages identify first-, second-, and third-year female academy students in sexualized material."
-  - source_id: 818169_28978d7d08
-    title: "[Crowd] X-Change 2 R"
-    reason: "Source synopsis identifies private-school students and erotic plotlines."
-  - source_id: 3697336_ad7a34319e
-    title: "[X-BangBang] Inga Ouhou!?"
-    reason: "Adult sexual sibling title; character ages are not established by the supplied source metadata, so the full CG set remains age-ambiguous."
+blocked_pool_ids:
+  - WBPOOL-A
+  - WBPOOL-B
+  - WBPOOL-C
+  - WBPOOL-D
+
+public_reason_code: age_or_context_verification_required
 
 notes:
-  - "Copyright clearance from the project owner is recorded in AstRef/OWNERSHIP_NOTE.md."
-  - "These exclusions are content-safety gates, not copyright findings."
-  - "Clearly adult, nonsexual, or independently age-verified individual assets can be reviewed and moved out of exclusion later."
+  - ownership/redistribution permission is recorded separately
+  - prior story names and descriptions are intentionally omitted from public/runtime metadata
+  - assets can move from blocked to eligible only after image-level review
