@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build a Wishbound-native AstRef library from owner-cleared archive parts.
+"""Build a Wishbound-native AstRef manifest from owner-cleared archive parts.
 
 Public output is source-neutral and Wishbound-first. Original archive/source details
 are written only to AstRef/private_provenance/, which must remain Git-ignored.
 
-The importer does not infer that relabeling changes the actual visual content.
-Pools remain blocked until image-level review clears individual assets.
+Assets start unassigned. Explicit Wishbound context is applied only from
+AstRef/assignments.json after deliberate review.
 """
 from __future__ import annotations
 import argparse, csv, hashlib, json, re, zipfile
@@ -18,15 +18,6 @@ POOL_MAP={
     "818169_28978d7d08":"WBPOOL-C",
     "3697336_ad7a34319e":"WBPOOL-D",
 }
-
-ROUTES=[
-    ("avery","Avery Lane"),
-    ("mia","Mia Hart"),
-    ("chloe","Chloe Vale"),
-    ("naomi","Naomi Cross"),
-    ("lila","Lila Morgan"),
-    ("rhea","Rhea Park"),
-]
 
 def sha256(data):
     return hashlib.sha256(data).hexdigest()
@@ -43,13 +34,16 @@ def classify(rel: str):
         return "effect"
     return "cg"
 
-def safe_slug(s):
-    s=re.sub(r"[^a-z0-9]+","_",s.lower()).strip("_")
-    return s or "asset"
+def load_assignments(path: Path):
+    if not path.exists():
+        return {}
+    data=json.loads(path.read_text(encoding="utf-8"))
+    return data.get("assignments",{})
 
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("archives", nargs="+", type=Path)
+    ap.add_argument("--assignments", type=Path, default=Path("AstRef/assignments.json"))
     ap.add_argument("--public-manifest", type=Path, default=Path("AstRef/manifests/wishbound_assets.csv"))
     ap.add_argument("--private-manifest", type=Path, default=Path("AstRef/private_provenance/provenance.csv"))
     ap.add_argument("--summary", type=Path, default=Path("AstRef/manifests/import_summary.json"))
@@ -57,6 +51,7 @@ def main():
 
     args.public_manifest.parent.mkdir(parents=True,exist_ok=True)
     args.private_manifest.parent.mkdir(parents=True,exist_ok=True)
+    assignments=load_assignments(args.assignments)
 
     seen={}
     public_rows=[]
@@ -81,28 +76,36 @@ def main():
                     continue
                 seen[digest]=True
                 counter+=1
+
                 pool=POOL_MAP.get(source_id,"WBPOOL-X")
-                role=classify(rel)
-                route_id,character=ROUTES[(counter-1)%len(ROUTES)]
+                inferred_role=classify(rel)
                 asset_id=f"WB-AST-{counter:05d}"
+                a=assignments.get(asset_id,{})
+                assigned=any(a.get(k) for k in (
+                    "wishbound_character","wishbound_route","wishbound_scene_type",
+                    "wishbound_outfit","wishbound_expression","runtime_path"
+                ))
+                role=a.get("wishbound_role") or inferred_role
                 ext=Path(rel).suffix.lower()
                 filename=f"{asset_id.lower()}_{role}{ext}"
-                runtime_path=f"game/images/routes/{route_id}/{role}/{filename}"
-                status="review_required"
+                route=a.get("wishbound_route","")
+                default_path=f"AstRef/review/{pool}/{filename}"
+                runtime_path=a.get("runtime_path") or (f"game/images/routes/{route}/{role}/{filename}" if route else default_path)
 
                 public_rows.append({
                     "wishbound_asset_id":asset_id,
                     "wishbound_pool":pool,
-                    "wishbound_character":character,
-                    "wishbound_route":route_id,
+                    "wishbound_character":a.get("wishbound_character",""),
+                    "wishbound_route":route,
                     "wishbound_role":role,
-                    "wishbound_scene_type":"",
-                    "wishbound_outfit":"",
-                    "wishbound_expression":"",
+                    "wishbound_scene_type":a.get("wishbound_scene_type",""),
+                    "wishbound_outfit":a.get("wishbound_outfit",""),
+                    "wishbound_expression":a.get("wishbound_expression",""),
+                    "assignment_status":"assigned" if assigned else "unassigned",
                     "runtime_filename":filename,
                     "runtime_path":runtime_path,
                     "sha256":digest,
-                    "publication_state":status,
+                    "publication_state":"review_required",
                 })
                 private_rows.append({
                     "wishbound_asset_id":asset_id,
@@ -112,19 +115,19 @@ def main():
                     "sha256":digest,
                 })
 
-    pub_fields=list(public_rows[0]) if public_rows else []
-    with args.public_manifest.open("w",newline="",encoding="utf-8") as f:
-        if pub_fields:
-            w=csv.DictWriter(f,fieldnames=pub_fields); w.writeheader(); w.writerows(public_rows)
+    if public_rows:
+        with args.public_manifest.open("w",newline="",encoding="utf-8") as f:
+            w=csv.DictWriter(f,fieldnames=list(public_rows[0])); w.writeheader(); w.writerows(public_rows)
 
-    priv_fields=list(private_rows[0]) if private_rows else []
-    with args.private_manifest.open("w",newline="",encoding="utf-8") as f:
-        if priv_fields:
-            w=csv.DictWriter(f,fieldnames=priv_fields); w.writeheader(); w.writerows(private_rows)
+    if private_rows:
+        with args.private_manifest.open("w",newline="",encoding="utf-8") as f:
+            w=csv.DictWriter(f,fieldnames=list(private_rows[0])); w.writeheader(); w.writerows(private_rows)
 
     args.summary.write_text(json.dumps({
         "identity_model":"wishbound_native",
         "unique_assets":len(public_rows),
+        "assigned":sum(r["assignment_status"]=="assigned" for r in public_rows),
+        "unassigned":sum(r["assignment_status"]=="unassigned" for r in public_rows),
         "publication_state":{"review_required":len(public_rows)},
         "public_manifest":args.public_manifest.as_posix(),
         "private_provenance":args.private_manifest.as_posix(),
