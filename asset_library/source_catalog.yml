@@ -1,0 +1,77 @@
+version: 1
+project: Wishbound
+sources:
+  - id: upload_gonna_be
+    display_name: "[GROOVER] Gonna be--"
+    source_type: user_uploaded_archive
+    expected_local_path: assets_inbox/uploaded/gonna_be.zip
+    image_count: 943
+    sha256: c9c5b17e9379f6013331b3aae9542c4add717e84ed672351ca0c1965061fc979
+    provenance_label: commercial_game_cg_full_rip
+    redistribution: blocked_public_repo
+    default_action: reference_or_local_only_until_rights_verified
+    technical_summary:
+      cover_or_index: 1
+      square_or_mixed_cg: 614
+      portrait_scene_or_sprite_candidate: 324
+      landscape_scene_or_cg: 4
+      transparent_images: 0
+      sequence_groups: 623
+
+  - id: upload_inga_ouhou
+    display_name: "[X-BangBang] Inga Ouhou!"
+    source_type: user_uploaded_archive
+    expected_local_path: assets_inbox/uploaded/inga_ouhou.zip
+    image_count: 300
+    sha256: 11c7305ecc29a0e0a9ab913a513d7b3f8431a5c5db2cdb541c4bca3ab77cd306
+    provenance_label: commercial_game_cg
+    redistribution: blocked_public_repo
+    default_action: reference_or_local_only_until_rights_verified
+    technical_summary:
+      cover_or_index: 1
+      layer_or_overlay_candidate: 199
+      square_or_mixed_cg: 100
+      transparent_images: 199
+      sequence_groups: 22
+
+  - id: upload_xchange2r
+    display_name: "[Crowd] X-Change 2 R"
+    source_type: user_uploaded_archive
+    expected_local_path: assets_inbox/uploaded/xchange2r.zip
+    image_count: 680
+    sha256: 4829fd19341453fe685dddff59c13a02b1668f2153a774c0767495b630dc3e0c
+    provenance_label: commercial_game_cg
+    redistribution: blocked_public_repo
+    default_action: reference_or_local_only_until_rights_verified
+    technical_summary:
+      cover_or_index: 1
+      layer_or_overlay_candidate: 300
+      square_or_mixed_cg: 379
+      transparent_images: 300
+      sequence_groups: 457
+
+  - id: student_transfer
+    display_name: Student Transfer
+    source_type: linked_git_repository
+    url: https://git.student-transfer.com/st/student-transfer
+    expected_local_path: assets_inbox/student-transfer
+    documented_license: Apache-2.0
+    rights_note: "Repository license exists, but individual asset provenance must still be reviewed before redistribution."
+    redistribution: review_per_asset
+    default_action: classify_then_clear_or_recreate
+    documented_image_roots:
+      - game/images/anim
+      - game/images/bg
+      - game/images/cg
+      - game/images/characters
+      - game/images/characters_highres
+      - game/images/line_action
+      - game/images/misc
+      - game/images/movies
+      - game/images/phone_icon
+      - game/images/thumbs
+      - game/images/transitions
+
+totals:
+  uploaded_archive_images: 1923
+  uploaded_archives: 3
