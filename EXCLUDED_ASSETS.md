@@ -1,17 +1,11 @@
-# Excluded uploaded archives
+# Asset Identity and Safety
 
-The following user-provided archives are **not included in this project, Git repository, or APK build**:
+Wishbound no longer uses prior character, story, relationship, or scene context as part of an image's game identity.
 
-1. `[GROOVER] Gonna be--.zip`
-   - Embedded `info.txt` labels the archive `Category: Game CG` and `Full Rip`.
-   - Treated as third-party commercial material without demonstrated redistribution rights.
+Accepted assets are renamed and assigned to new Wishbound characters, routes, outfits, expressions, locations, and events using `WB-AST-*` IDs.
 
-2. `[X-BangBang] Inga Ouhou!- ... .zip`
-   - Embedded `info.txt` labels the archive `Category: Game CG`.
-   - Treated as third-party commercial material without demonstrated redistribution rights.
+Original archive/source details, where administratively necessary, are kept only in the Git-ignored `AstRef/private_provenance/` manifest and are not exposed to runtime code.
 
-3. `[Crowd] X-Change 2 R.zip`
-   - Embedded `info.txt` labels the archive `Category: Game CG` and links a commercial purchase page.
-   - Its description places the source scenario at a private school and explicitly describes sexual content, so the archive is also unsuitable for indiscriminate use in Wishbound's adult lewd routes.
+Ownership authorization for the uploaded Wbasts parts is recorded in `AstRef/OWNERSHIP_NOTE.md`.
 
-These archives may be consulted only as high-level structural/theme references. No image bytes, filenames-as-assets, story text, branding, or ripped CG from them are shipped.
+Safety review remains based on the actual visual content. Recontextualizing an image does not make disallowed age/content imagery publishable.
