@@ -1,50 +1,56 @@
-# AstRef — Wishbound Asset Reference Library
+# AstRef — Wishbound Native Asset Library
 
-AstRef is Wishbound's normalized reference layer for externally supplied art sets.
+AstRef is the production intake and assignment layer for Wishbound artwork.
 
-## Current intake
+The game-facing library intentionally does **not** carry prior story, character, relationship, or scene context. Once an image is accepted into Wishbound it is identified only by its Wishbound asset ID and its role in the current game.
 
-Ten uploaded `Wbasts_Part_*.zip` archives were scanned as one set. They contain **2,968 unique images** across four commercial Game CG sources:
-
-| Source ID | Reference title | Images | Transparent layers |
-|---|---|---:|---:|
-| 3696570_a7b0c3fc7d | [GROOVER] Gonna be?? | 943 | 0 |
-| 4114637_452fc8a874 | [Milk Factory] character-set dump | 1,047 | 1,047 |
-| 818169_28978d7d08 | [Crowd] X-Change 2 R | 680 | 300 |
-| 3697336_ad7a34319e | [X-BangBang] Inga Ouhou!? | 298 | 199 |
-
-The embedded source metadata identifies these as commercial Game CG/gallery dumps. Raw image bytes are therefore **not published in this public repository**. AstRef keeps the complete technical identity, grouping, intended Wishbound role, and replacement slot for every image.
-
-## Repository structure
+## Public structure
 
 ```
 AstRef/
   README.md
-  SOURCE_SUMMARY.yml
+  WISHBOUND_POOL_SUMMARY.yml
   route_slots.yml
-  indexes/
-    3696570_a7b0c3fc7d.index.txt.gz
-    4114637_452fc8a874.index.txt.gz
-    818169_28978d7d08.index.txt.gz
-    3697336_ad7a34319e.index.txt.gz
-  raw/
-    README.md              # raw images stay local / ignored
+  manifests/
+    wishbound_assets.csv
+    import_summary.json
+  private_provenance/        # generated locally; ignored by Git
+  raw/                       # staging only; not referenced by runtime
 ```
 
-Each compressed index contains one line per unique image with:
+## Wishbound asset identity
 
-```
-astref_id | original_path | width | height | alpha | wishbound_role |
-sequence_group | variant | sha256
-```
+Every accepted asset receives:
 
-## Wishbound production roles
+- `wishbound_asset_id`
+- `wishbound_character`
+- `wishbound_route`
+- `wishbound_role`
+- `wishbound_scene_type`
+- `wishbound_outfit`
+- `wishbound_expression`
+- `runtime_filename`
+- `runtime_path`
+- dimensions / transparency / SHA-256
+- safety/publication state
 
-- `character_fullbody_or_outfit_layer`
-- `character_face_expression_or_overlay_layer`
-- `portrait_or_character_reference`
-- `background_or_event_reference`
-- `event_cg_reference`
-- `scene_or_event_reference`
+The game does not use source titles, old character names, old scene names, or old relationship context.
 
-Raw external images never become distributable game assets automatically. When an original/cleared replacement is created, preserve its `ASTREF-*` ID in the replacement manifest so route/event intent survives the swap.
+## Runtime categories
+
+- character base
+- expression layer
+- outfit layer
+- accessory layer
+- portrait
+- background
+- event CG
+- phone/gallery image
+- transformation/effect layer
+- transition/UI image
+
+## Provenance
+
+Original archive/source details are written only to `AstRef/private_provenance/` during intake. That folder is excluded from Git and is not packaged into Android builds.
+
+Safety review is still based on the actual visual content. Renaming or recontextualizing an image never bypasses an age/content restriction.
