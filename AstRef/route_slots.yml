@@ -1,57 +1,71 @@
-version: 1
+version: 2
+identity_model: wishbound_native
 routes:
   avery:
+    character: Avery Lane
+    age: 26
     theme: social_event_planner
     character_slots: [base, neutral, smile, amused, embarrassed, flirt, shocked, worried]
     outfit_slots: [sleepwear, casual, work, evening, date, outerwear]
     location_slots: [apartment, bathroom, closet, event_venue, city, restaurant]
     cg_slots: [awakening, mirror_reveal, phone_discovery, event_reveal, relationship_reveal]
   mia:
+    character: Mia Hart
+    age: 29
     theme: married_professional
     character_slots: [base, neutral, composed, embarrassed, affectionate, shocked, worried]
     outfit_slots: [sleepwear, casual, work, formal, date, outerwear]
     location_slots: [apartment, bathroom, closet, office_lobby, office, restaurant]
     cg_slots: [awakening, mirror_reveal, ring_discovery, spouse_reveal, office_reveal]
   chloe:
+    character: Chloe Vale
+    age: 25
     theme: public_creator
     character_slots: [base, neutral, camera_smile, playful, embarrassed, shocked, worried]
     outfit_slots: [sleepwear, casual, creator, photoshoot, evening, date]
     location_slots: [apartment, bathroom, closet, photo_studio, city, cafe]
     cg_slots: [awakening, mirror_reveal, social_feed, photoshoot, fiance_reveal]
   naomi:
+    character: Naomi Cross
+    age: 33
     theme: tattoo_artist
     character_slots: [base, neutral, amused, skeptical, embarrassed, flirt, annoyed]
     outfit_slots: [sleepwear, casual, studio, evening, date]
     location_slots: [apartment, bathroom, closet, tattoo_studio, nightlife, cafe]
     cg_slots: [awakening, mirror_reveal, tattoo_discovery, studio_reveal, ex_reveal]
   lila:
+    character: Lila Morgan
+    age: 28
     theme: pastry_chef
     character_slots: [base, neutral, warm, embarrassed, affectionate, shocked, worried]
     outfit_slots: [sleepwear, casual, chef, date, evening]
     location_slots: [apartment, bathroom, closet, cafe, kitchen, city]
     cg_slots: [awakening, mirror_reveal, kitchen_habit, cafe_reveal, girlfriend_reveal]
   rhea:
+    character: Rhea Park
+    age: 30
     theme: dj_club_manager
     character_slots: [base, neutral, confident, flirt, embarrassed, annoyed, shocked]
     outfit_slots: [sleepwear, casual, club, performance, evening]
     location_slots: [apartment, bathroom, closet, rooftop_club, backstage, city_night]
     cg_slots: [awakening, mirror_reveal, nightlife_history, club_reveal, bartender_reveal]
 
-reference_assignment:
+wishbound_roles:
   character_fullbody_or_outfit_layer:
-    action: create_original_adult_character_layer
+    runtime_category: character
   character_face_expression_or_overlay_layer:
-    action: create_original_expression_or_overlay
+    runtime_category: expression
   portrait_or_character_reference:
-    action: create_original_portrait_or_pose
+    runtime_category: portrait
   background_or_event_reference:
-    action: create_original_adult_location_or_event
+    runtime_category: background
   event_cg_reference:
-    action: create_original_adult_route_cg
+    runtime_category: cg
   scene_or_event_reference:
-    action: review_composition_then_create_original_scene
+    runtime_category: cg_or_background
 
-safety:
-  default_external_status: quarantine
+assignment_policy:
+  canonical_identity: wishbound
+  preserve_prior_story_context: false
+  provenance_visibility: private_local_only
   adult_route_requirement: explicit_adult
-  age_ambiguous_sexual_source: reject_for_route_adaptation
