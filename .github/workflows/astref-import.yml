@@ -1,0 +1,70 @@
+name: Import AstRef staged archives
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/astref-import.yml'
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download staged archives
+        env:
+          URL_001: https://uc174e936e2d521bb0638cc9ad71.dl.dropboxusercontent.com/cd/0/get/DJiuqWXs68Hbf61CjQISCN9JfBrbtLffNSHB1HcsY-ayZG2bPdLiHkSC9Z7blXlot2XiRNoP_Grb1fnpxLGsxOiKUeHYDylzfhFf6IynID8l8ACSGj6in1pX_vZUW5-jv7aXov0EFZGh4ZAewdFoGcIeGEJOiV4BR0HKpAf_Pby6cA/file?c_luid=1f041b3d
+          URL_002: https://ucc3e0a997073fdd2da9acb1bda2.dl.dropboxusercontent.com/cd/0/get/DJgNH5fCCceM1325qadI5ZhINzEhDBHlWrmPdp7zuIiCdzdgGa7AXmo-NUzJW09tZeRSR7fNCQUbBiU_L6cx7vAFrTRyjUTAZPDdbvGKNpLaElpfsIvmuSOAXVMpfJY_w_9AcxSQSkqm6_du-F4WzR9l_otJY8wkTZxeHJ0gqyWn5Q/file?c_luid=1f041b3d
+          URL_003: https://ucc7567cc89738da1b484e25aabb.dl.dropboxusercontent.com/cd/0/get/DJjbbYhlsSF0tpvpa0J39S3Z5ITzLP1TBIgmYwlkq_0zjKKvbcHeHeXRveqSoc0lMKNBlOJpleWDVNtfJu-dD6YRZcJM-O89IIdsgoobz4WJrCthRexHXl-sC_p4TIV0e4S0Kn2FlqPZQLQr1N-JvKMAMCnxtK5xzDp8cx_yGUIkNA/file?c_luid=1f041b3d
+          URL_004: https://uc1bac6fe85bcb27f7172a018ccb.dl.dropboxusercontent.com/cd/0/get/DJhatFf_7gO6xFiVTTIOdLZoUy_FPQF-590Zk-lDNBrWPdskPIgMSKmDCsFd62GOzNUK4GPPK68ws_QFKyjD5fXC7TSNiW0QnmvEUxr1lFSYWJ_-fOB2sKtNvMXxPQxnMVjRSGWNkFGaT3Z2D9cjCT9DNJAv6xrSxPa3JqiQ4CqmCA/file?c_luid=1f041b3d
+          URL_005: https://ucd908161f4149b19aa9470e661a.dl.dropboxusercontent.com/cd/0/get/DJgyjpNHEvp9hFbnL-HvRRHrLtJq-WDZAtABFtg5zwKwzSOMlbbGM6IBCUPhLGR0NdNkLVdS1NuXR1rzleKb1V2PJPRM57IlBtW5gPJdpjBE2mOtt4BuPqQddlkydnUbiRVsmCKLOojRm3HQ5IEy7NKZHFd6tjkUrGsGpjsBXrlh6w/file?c_luid=1f041b3d
+          URL_006: https://uc6f00bafcff9235b9c188b9abf2.dl.dropboxusercontent.com/cd/0/get/DJg1SF85JFkjGlnzHhUmUhVZ0LwDgNcMSCtHIcCFuVLCYV0tw5FVk6377DKp0Mo_GR6MdwfHioU4PTRZZfmHOsb7j2DEI-FF8Uaipr0cYQGoLARWyiA9yDqT3wIFRRduSsGyDT2LGO3g027kduATdT5nxxzlNrequfMLmZkfBaO25w/file?c_luid=1f041b3d
+          URL_007: https://uc24032371c7727b6200595ebb63.dl.dropboxusercontent.com/cd/0/get/DJiAfwwIPVOUpAVG8ajAntIInZl32-Tmw9XShm5VeovPMdhzfns3r884b486s-Q6qIMh_xPAWUYewaISKuZVf-gcVus0l6JS3K5pX5bFvF4xwdSJ3F1ijXy53fV7OyALH3bgGPnEjnuQvUBxKB5xErfHDcjGgHKVlSe41gDbqMOhaQ/file?c_luid=1f041b3d
+          URL_008: https://uc1192dff11687ea995d19b973d1.dl.dropboxusercontent.com/cd/0/get/DJiVvFXs1OyxmO4PjXaheEfc83FWals5Pmu85LcAoT1bFzvYmpbU-4cXPahA52Aki1BExx5vl6Uk-QlVnC2jkz0wz1oI9vMg_Z8PeWHNHjPvvFEHkAHGRqzRzQPTSdbLEX5jlCPXXKMGeVzvr7L0HZq4XdguBScSe3NwQao53dBeZQ/file?c_luid=1f041b3d
+          URL_009: https://uc905a93c4c14254b7c0a9f6d0bf.dl.dropboxusercontent.com/cd/0/get/DJj1B-f585RED0b8G9-z-M6d-jzqmZUoRlLZQAiGeLO_9kV75gxBzK6e94cfXLAJzsqXbMQJF2DBmUzEsd2lL7M_cvAq-7RCFUQB9b9k-7Q6o9mHa5x5eIuGpAQGPEgiQF1UwCXvouujDQY_tmpGxpmPB61GQuHYUz71TOQ2_aTW3Q/file?c_luid=1f041b3d
+          URL_010: https://uc59acc357a132bc125b0844f79b.dl.dropboxusercontent.com/cd/0/get/DJiqfc_mWzXfuopmIqJwth_kXeeG8cl8VpsOxlP8xPuef7tQrb8VGpMdeVW4iBS22THwV39vVXnj0hASdFsgupB7Q9v1t390BYXcSkQGGggbqCg7TqgZbxSl-MsiB6MPKfPwMVkKShxGO2ifeZySgaY2REZC4CStidbsBrZa8QSizw/file?c_luid=1f041b3d
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/wbasts
+          for n in $(seq -w 1 10); do
+            key="URL_${n}"
+            url="${!key}"
+            curl -fL --retry 3 --retry-delay 2 "$url" -o "/tmp/wbasts/Wbasts_Part_${n}.zip"
+          done
+
+      - name: Build AstRef safety-filtered import
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/ingest_wbasts_to_astref.py /tmp/wbasts/Wbasts_Part_*.zip
+          mkdir -p AstRef/manifests
+          python - <<'PY'
+          from pathlib import Path
+          import csv, json
+          p=Path('AstRef/manifests/wbasts_files.csv')
+          rows=list(csv.DictReader(p.open(encoding='utf-8'))) if p.exists() else []
+          summary={
+            'records':len(rows),
+            'eligible_for_repo':sum(r['status']=='eligible_for_repo' for r in rows),
+            'excluded_safety':sum(r['status']=='excluded_safety' for r in rows),
+          }
+          Path('AstRef/manifests/import_summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
+          print(summary)
+          PY
+
+      - name: Commit eligible AstRef files and manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wishbound-astref-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add AstRef/raw AstRef/manifests
+          if ! git diff --cached --quiet; then
+            git commit -m "Import safety-filtered AstRef image library [skip ci]"
+            git push origin HEAD:main
+          fi
