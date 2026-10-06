@@ -14,4 +14,4 @@ dists/
 assets_inbox/
 asset_build/
 game/vendor_unverified/
-assets/rights_overrides.yml
+asset_library/rights_overrides.yml
