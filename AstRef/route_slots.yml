@@ -1,0 +1,57 @@
+version: 1
+routes:
+  avery:
+    theme: social_event_planner
+    character_slots: [base, neutral, smile, amused, embarrassed, flirt, shocked, worried]
+    outfit_slots: [sleepwear, casual, work, evening, date, outerwear]
+    location_slots: [apartment, bathroom, closet, event_venue, city, restaurant]
+    cg_slots: [awakening, mirror_reveal, phone_discovery, event_reveal, relationship_reveal]
+  mia:
+    theme: married_professional
+    character_slots: [base, neutral, composed, embarrassed, affectionate, shocked, worried]
+    outfit_slots: [sleepwear, casual, work, formal, date, outerwear]
+    location_slots: [apartment, bathroom, closet, office_lobby, office, restaurant]
+    cg_slots: [awakening, mirror_reveal, ring_discovery, spouse_reveal, office_reveal]
+  chloe:
+    theme: public_creator
+    character_slots: [base, neutral, camera_smile, playful, embarrassed, shocked, worried]
+    outfit_slots: [sleepwear, casual, creator, photoshoot, evening, date]
+    location_slots: [apartment, bathroom, closet, photo_studio, city, cafe]
+    cg_slots: [awakening, mirror_reveal, social_feed, photoshoot, fiance_reveal]
+  naomi:
+    theme: tattoo_artist
+    character_slots: [base, neutral, amused, skeptical, embarrassed, flirt, annoyed]
+    outfit_slots: [sleepwear, casual, studio, evening, date]
+    location_slots: [apartment, bathroom, closet, tattoo_studio, nightlife, cafe]
+    cg_slots: [awakening, mirror_reveal, tattoo_discovery, studio_reveal, ex_reveal]
+  lila:
+    theme: pastry_chef
+    character_slots: [base, neutral, warm, embarrassed, affectionate, shocked, worried]
+    outfit_slots: [sleepwear, casual, chef, date, evening]
+    location_slots: [apartment, bathroom, closet, cafe, kitchen, city]
+    cg_slots: [awakening, mirror_reveal, kitchen_habit, cafe_reveal, girlfriend_reveal]
+  rhea:
+    theme: dj_club_manager
+    character_slots: [base, neutral, confident, flirt, embarrassed, annoyed, shocked]
+    outfit_slots: [sleepwear, casual, club, performance, evening]
+    location_slots: [apartment, bathroom, closet, rooftop_club, backstage, city_night]
+    cg_slots: [awakening, mirror_reveal, nightlife_history, club_reveal, bartender_reveal]
+
+reference_assignment:
+  character_fullbody_or_outfit_layer:
+    action: create_original_adult_character_layer
+  character_face_expression_or_overlay_layer:
+    action: create_original_expression_or_overlay
+  portrait_or_character_reference:
+    action: create_original_portrait_or_pose
+  background_or_event_reference:
+    action: create_original_adult_location_or_event
+  event_cg_reference:
+    action: create_original_adult_route_cg
+  scene_or_event_reference:
+    action: review_composition_then_create_original_scene
+
+safety:
+  default_external_status: quarantine
+  adult_route_requirement: explicit_adult
+  age_ambiguous_sexual_source: reject_for_route_adaptation
