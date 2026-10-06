@@ -1,0 +1,45 @@
+version: 2
+library: AstRef
+identity_model: wishbound_native
+public_context: wishbound_only
+known_image_count: 2968
+public_pool_ids:
+  WBPOOL-A:
+    images: 943
+    alpha_layers: 0
+    candidate_roles:
+      event_cg: 619
+      scene_or_event: 318
+      background: 4
+      portrait: 2
+  WBPOOL-B:
+    images: 1047
+    alpha_layers: 1047
+    candidate_roles:
+      character_or_outfit_layer: 1043
+      expression_or_overlay_layer: 4
+  WBPOOL-C:
+    images: 680
+    alpha_layers: 300
+    candidate_roles:
+      scene_or_event: 379
+      character_or_outfit_layer: 298
+      expression_or_overlay_layer: 2
+      portrait: 1
+  WBPOOL-D:
+    images: 298
+    alpha_layers: 199
+    candidate_roles:
+      character_or_outfit_layer: 162
+      scene_or_event: 98
+      expression_or_overlay_layer: 37
+      portrait: 1
+
+public_rules:
+  - no_prior_story_context
+  - no_prior_character_names
+  - no_prior_relationship_context
+  - no_prior_scene_labels
+  - wishbound_ids_are_canonical
+  - source_provenance_is_private_local_only
+  - safety_review_uses_actual_visual_content
