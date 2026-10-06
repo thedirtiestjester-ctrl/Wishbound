@@ -1,0 +1,91 @@
+version: 1
+source: student_transfer
+source_url: https://git.student-transfer.com/st/student-transfer
+documentation: https://docs.student-transfer.com/scenario_guide/characters_and_images
+
+path_rules:
+  "game/images/characters/<character>/<pose>/faces/face/*":
+    wishbound_class: character_expression
+    target: "game/images/characters/<character>/<pose>/expressions/"
+  "game/images/characters/<character>/<pose>/faces/blush/*":
+    wishbound_class: character_blush
+    target: "game/images/characters/<character>/<pose>/blush/"
+  "game/images/characters/<character>/<pose>/faces/mutations/*":
+    wishbound_class: character_expression_mutation
+    target: "game/images/characters/<character>/<pose>/mutations/"
+  "game/images/characters/<character>/<pose>/outfits/*.png":
+    wishbound_class: character_outfit_layer
+    target: "game/images/characters/<character>/<pose>/outfits/"
+  "game/images/characters/<character>/<pose>/outfits/<outfit>/<accessory>/*":
+    wishbound_class: character_accessory_layer
+    target: "game/images/characters/<character>/<pose>/accessories/"
+  "game/images/bg/**":
+    wishbound_class: background
+    target: game/images/backgrounds/
+    naming: "<location>_<room>_<variant>"
+  "game/images/cg/**":
+    wishbound_class: event_cg
+    target: game/images/cg/
+  "game/images/anim/**":
+    wishbound_class: animation_asset
+    target: game/images/effects/animation/
+  "game/images/transitions/**":
+    wishbound_class: transition_asset
+    target: game/images/effects/transitions/
+  "game/images/line_action/**":
+    wishbound_class: dialogue_action_graphic
+    target: game/images/ui/line_action/
+  "game/images/phone_icon/**":
+    wishbound_class: phone_ui_icon
+    target: game/images/ui/phone/
+  "game/images/thumbs/**":
+    wishbound_class: thumbnail
+    target: game/images/thumbs/
+  "game/images/misc/**":
+    wishbound_class: misc_visual
+    target: game/images/misc/
+  "game/images/movies/**":
+    wishbound_class: animation_frames_or_movie_asset
+    target: game/images/effects/movies/
+
+root_effect_candidates:
+  - alienparticle.png
+  - flare.png
+  - fog_particle.png
+  - ghostmask.png
+  - rain_particle.png
+  - snowflake.png
+  - star.png
+  - tailparticle.png
+
+wishbound_adaptation:
+  character_sprites:
+    policy: reference_until_provenance_verified
+    adult_route_requirement: "Only explicit-adult characters/variants may be used in mature routes."
+    adaptation: "Retain layered pose/outfit/expression/accessory concept; rename into Wishbound identity IDs."
+  backgrounds:
+    policy: review_then_clear_or_recreate
+    adaptation: "Map school/minor-coded spaces to adult colleges, offices, apartments, nightlife, studios, cafes, malls, parks, transit and homes as appropriate."
+  event_cg:
+    policy: reference_until_provenance_verified
+    adaptation: "Use composition/event-role reference; replace with original Wishbound CGs unless rights are clear."
+  effects:
+    policy: strongest_reuse_candidate_after_review
+    adaptation: "Reality rewrite, wish flash, possession haze, memory bleed, phone overlays and environmental particles."
+  ui:
+    policy: review_then_retheme
+    adaptation: "Use functional ideas, not Student Transfer branding."
+
+adult_content_filter:
+  default: review_required
+  reject_for_lewd_route_if:
+    - minor_or_school_age_character_depiction
+    - age_ambiguous_character_in_sexual_context
+    - explicit_source_with_unverified_age
+  safe_retarget_examples:
+    - generic_apartment_background
+    - generic_city_background
+    - generic_office_background
+    - generic_cafe_background
+    - generic_park_background
+    - generic_particle_effect
