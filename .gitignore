@@ -10,8 +10,9 @@ android-*.zip
 build/
 dists/
 
-# Raw external/reference assets stay local until rights are verified.
+# Local-only intake/provenance data.
 assets_inbox/
 asset_build/
 game/vendor_unverified/
 asset_library/rights_overrides.yml
+AstRef/private_provenance/
