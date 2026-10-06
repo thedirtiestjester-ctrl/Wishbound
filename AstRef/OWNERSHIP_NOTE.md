@@ -1,4 +1,4 @@
-# Ownership / Redistribution Note
+# Ownership / Redistribution Authorization
 
 The project owner has explicitly stated that they own the image sets supplied in:
 
@@ -15,6 +15,6 @@ The project owner has explicitly stated that they own the image sets supplied in
 
 and has authorized their redistribution for the Wishbound project.
 
-This statement clears the project's copyright/redistribution gate for those uploaded Wbasts files only. It does not override content-safety restrictions. Material involving sexualized minors or age-ambiguous student characters must remain excluded from the public repository and game build.
+Wishbound assigns its own characters, routes, locations, outfits, expressions, and scene meanings to accepted assets. Previous narrative context is not part of the game's asset identity.
 
-Student Transfer assets remain governed separately by their own license/provenance status.
+This ownership authorization does not override content-safety requirements. Visual content must still pass image-level safety review before publication or runtime use.
