@@ -1,0 +1,49 @@
+version: 1
+library: AstRef
+unique_images: 2968
+raw_publication: blocked
+reason: commercial_game_cg_gallery_dumps
+sources:
+  "3696570_a7b0c3fc7d":
+    title: "[GROOVER] Gonna be??"
+    images: 943
+    bytes: 46491588
+    alpha_layers: 0
+    production_roles:
+      event_cg_reference: 619
+      scene_or_event_reference: 318
+      background_or_event_reference: 4
+      portrait_or_character_reference: 2
+  "4114637_452fc8a874":
+    title: "[Milk Factory] character-set dump"
+    images: 1047
+    bytes: 105687806
+    alpha_layers: 1047
+    production_roles:
+      character_fullbody_or_outfit_layer: 1043
+      character_face_expression_or_overlay_layer: 4
+  "818169_28978d7d08":
+    title: "[Crowd] X-Change 2 R"
+    images: 680
+    bytes: 22063976
+    alpha_layers: 300
+    production_roles:
+      scene_or_event_reference: 379
+      character_fullbody_or_outfit_layer: 298
+      character_face_expression_or_overlay_layer: 2
+      portrait_or_character_reference: 1
+  "3697336_ad7a34319e":
+    title: "[X-BangBang] Inga Ouhou!?"
+    images: 298
+    bytes: 12337693
+    alpha_layers: 199
+    production_roles:
+      character_fullbody_or_outfit_layer: 162
+      scene_or_event_reference: 98
+      character_face_expression_or_overlay_layer: 37
+      portrait_or_character_reference: 1
+publication_gate:
+  - rights must be explicitly cleared
+  - mature-route characters must be explicitly adult
+  - age-ambiguous sexual material is not eligible
+  - replacement must have a Wishbound role and route assignment
