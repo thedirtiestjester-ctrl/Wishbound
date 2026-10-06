@@ -1,0 +1,11 @@
+version: 1
+# Copy to assets/rights_overrides.yml locally.
+# Only mark entries cleared when you actually have permission to redistribute them.
+overrides:
+  - match: "source:student_transfer path:game/images/example.png"
+    status: cleared
+    license: Apache-2.0
+    notes: "Example only."
+  - match: "asset_id:WBEXT-EXAMPLE-0001"
+    status: local_only
+    notes: "Do not publish."
