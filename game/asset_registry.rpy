@@ -1,5 +1,5 @@
 # Wishbound asset taxonomy / adaptation registry.
-# Raw external assets are never referenced here until cleared and copied into game/images.
+# Raw external assets are never referenced here until cleared and copied into game/images.\n# Catalog/provenance metadata lives in asset_library/ (not root assets/, which RAPT reserves).
 
 init -20 python:
     WB_ASSET_CLASSES = {
