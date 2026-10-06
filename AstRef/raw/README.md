@@ -1,7 +1,15 @@
 # AstRef/raw
 
-This path is intentionally reserved for **local-only source/reference images**.
+This path is a **staging area**, not a runtime identity layer.
 
-It is ignored by Git and is never included in Android builds. The uploaded Wbasts archives identify themselves as commercial Game CG/gallery dumps, so their raw images are not published to the public Wishbound repository.
+Files placed here are addressed by Wishbound-native IDs and neutral pool IDs. Runtime code does not use old story, character, scene, or relationship labels.
 
-Use `tools/build_astref_local.py` to reconstruct the local quarantine tree from the ten uploaded ZIP parts. Reviewing or clearing an asset does not happen automatically.
+The canonical public manifest is:
+
+`AstRef/manifests/wishbound_assets.csv`
+
+Original archive/source provenance, if needed administratively, is generated only under the Git-ignored:
+
+`AstRef/private_provenance/`
+
+Assets are not promoted into `game/images/` until their actual visual content passes review and a deliberate Wishbound assignment is recorded.
