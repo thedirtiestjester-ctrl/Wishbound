@@ -61,6 +61,12 @@ jobs:
         with:
           action: lint
 
+      - name: Clean RAPT temporary build directory
+        shell: bash
+        run: |
+          rm -rf "$HOME/.renpy_exec/tmp/android.dist" target
+          mkdir -p target
+
       - name: Build universal APK
         uses: Ayowel/renpy-setup-action@v3
         with:
