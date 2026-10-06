@@ -37,85 +37,13 @@ jobs:
           print("Validated", len(pngs), "generated PNG assets")
           PY
 
-      - name: Install final Android workflow
-        shell: bash
-        run: |
-          cat > .github/workflows/android-apk.yml <<'YAML'
-          name: Build Android APK
-          on:
-            workflow_dispatch:
-            push:
-              branches: [ main ]
-              paths:
-                - 'game/**'
-                - 'android.json'
-                - 'tools/generate_assets.py'
-                - '.github/workflows/android-apk.yml'
-
-          env:
-            ANDROID_NDK_HOME: ""
-
-          jobs:
-            android-apk:
-              runs-on: ubuntu-latest
-              permissions:
-                contents: read
-              steps:
-                - uses: actions/checkout@v4
-                - uses: actions/setup-java@v4
-                  with:
-                    distribution: temurin
-                    java-version: '21'
-                - name: Materialize Android config
-                  run: cp android.json .android.json
-                - name: Create temporary sideload signing key
-                  shell: bash
-                  run: |
-                    keytool -genkeypair -v \
-                      -keystore "$GITHUB_WORKSPACE/android.keystore" \
-                      -storepass android \
-                      -alias android \
-                      -keypass android \
-                      -keyalg RSA -keysize 2048 -validity 10000 \
-                      -dname "CN=Wishbound CI,O=Wishbound,C=US"
-                - name: Install Ren'Py, RAPT, and Android SDK
-                  uses: Ayowel/renpy-setup-action@v3
-                  with:
-                    action: install
-                    version: '8.5.3'
-                    dlc: rapt
-                    android_sdk: true
-                    android_properties: |
-                      key.alias=android
-                      key.store.password=android
-                      key.alias.password=android
-                      key.store=\${{ github.workspace }}/android.keystore
-                - name: Lint project
-                  uses: Ayowel/renpy-setup-action@v3
-                  with:
-                    action: lint
-                    version: '8.5.3'
-                - name: Build universal APK
-                  uses: Ayowel/renpy-setup-action@v3
-                  with:
-                    action: android_build
-                    version: '8.5.3'
-                    build_type: apk
-                    out_dir: target
-                - name: Upload APK artifact
-                  uses: actions/upload-artifact@v4
-                  with:
-                    name: wishbound-v0.2-apk
-                    path: target/**/*.apk
-                    if-no-files-found: error
-          YAML
-
       - name: Expand repository source
         shell: bash
         run: |
           set -euo pipefail
+          # Workflow files are managed separately because the runner token may not edit them.
+          rm -f .github/workflows/android-apk.yml
           rm -rf bootstrap
-          rm -f .github/workflows/bootstrap-build.yml
           git config user.name "wishbound-build-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
@@ -152,7 +80,7 @@ jobs:
             key.alias=android
             key.store.password=android
             key.alias.password=android
-            key.store=\${{ github.workspace }}/android.keystore
+            key.store=${{ github.workspace }}/android.keystore
 
       - name: Lint Ren'Py project
         uses: Ayowel/renpy-setup-action@v3
