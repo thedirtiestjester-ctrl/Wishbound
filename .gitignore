@@ -9,3 +9,9 @@ tmp/
 android-*.zip
 build/
 dists/
+
+# Raw external/reference assets stay local until rights are verified.
+assets_inbox/
+asset_build/
+game/vendor_unverified/
+assets/rights_overrides.yml
