@@ -1,0 +1,6 @@
+Wishbound v0.2 ships only original/generated placeholder visual assets created for this prototype.
+
+No Student Transfer artwork/audio is included.
+No assets from the user-supplied commercial Game CG/full-rip archives are included.
+
+Ren'Py is a separate engine dependency and is not bundled in this source package.

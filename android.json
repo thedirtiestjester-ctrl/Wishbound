@@ -1,0 +1,19 @@
+{
+  "layout": null,
+  "package": "com.thedirtiestjester.wishbound",
+  "include_pil": false,
+  "numeric_version": 2,
+  "expansion": false,
+  "name": "Wishbound: Her Morning",
+  "update_always": true,
+  "source": false,
+  "icon_name": "Wishbound",
+  "version": "0.2.0",
+  "update_icons": true,
+  "update_keystores": false,
+  "permissions": ["VIBRATE"],
+  "include_sqlite": false,
+  "store": "none",
+  "orientation": "sensorLandscape",
+  "heap_size": "3"
+}

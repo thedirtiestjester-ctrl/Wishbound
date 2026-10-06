@@ -1,0 +1,24 @@
+{
+  "title": "Wishbound: Her Morning",
+  "version": "0.1.0",
+  "engine": "RenPy 8.5.3 target",
+  "android_package": "com.wishbound.hermorning",
+  "adult_characters": true,
+  "explicit_sex": false,
+  "student_transfer_assets_included": false,
+  "routes": [
+    "Avery Lane",
+    "Mia Hart",
+    "Chloe Vale"
+  ],
+  "systems": [
+    "reality rewrite",
+    "evidence",
+    "lewd/mild toggle",
+    "mirror",
+    "phone",
+    "closet",
+    "wallet",
+    "three endings"
+  ]
+}

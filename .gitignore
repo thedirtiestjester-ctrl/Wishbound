@@ -1,0 +1,11 @@
+*.rpyc
+*.rpymc
+saves/
+cache/
+tmp/
+.android.json
+*.keystore
+*.jks
+android-*.zip
+build/
+dists/
