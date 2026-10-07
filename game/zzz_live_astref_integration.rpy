@@ -21,12 +21,12 @@ init -10 python:
     }
 
     WB_ROUTE_SPRITES = {
-        "avery": "images/sprite_avery_lane.png",
-        "mia": "images/sprite_mia_hart.png",
-        "chloe": "images/sprite_chloe_vale.png",
-        "naomi": "images/sprite_naomi_cross.png",
-        "lila": "images/sprite_lila_morgan.png",
-        "rhea": "images/sprite_rhea_park.png",
+        "avery": "images/characters/avery.png",
+        "mia": "images/characters/mia.png",
+        "chloe": "images/characters/chloe.png",
+        "naomi": "images/characters/naomi.png",
+        "lila": "images/characters/lila.png",
+        "rhea": "images/characters/rhea.png",
     }
 
 # Source art is 4:3. Keep the complete composition visible instead of
@@ -54,15 +54,13 @@ image bg tattoo_studio = wb_fit_bg("images/astref_safe/wb_safe_0055_background.w
 image bg cafe = wb_fit_bg("images/astref_safe/wb_safe_0070_background.webp")
 image bg rooftop_club = wb_fit_bg("images/astref_safe/wb_safe_0068_background.webp")
 
-# Restore the current Wishbound character layer so story scenes are not empty.
-# These remain temporary character placeholders until a reviewed production
-# character-art pass replaces them.
-image avery = Transform("images/sprite_avery_lane.png", zoom=.76)
-image mia = Transform("images/sprite_mia_hart.png", zoom=.76)
-image chloe = Transform("images/sprite_chloe_vale.png", zoom=.76)
-image naomi = Transform("images/sprite_naomi_cross.png", zoom=.58)
-image lila = Transform("images/sprite_lila_morgan.png", zoom=.58)
-image rhea = Transform("images/sprite_rhea_park.png", zoom=.58)
+# Original adult Wishbound production character set.
+image avery = Transform("images/characters/avery.png", zoom=.72)
+image mia = Transform("images/characters/mia.png", zoom=.72)
+image chloe = Transform("images/characters/chloe.png", zoom=.72)
+image naomi = Transform("images/characters/naomi.png", zoom=.62)
+image lila = Transform("images/characters/lila.png", zoom=.62)
+image rhea = Transform("images/characters/rhea.png", zoom=.62)
 
 screen wb_route_card(rid, nm, age, blurb):
     button:
@@ -149,7 +147,7 @@ screen main_menu():
             spacing 11
             text "WISHBOUND" size 54 bold True color "#fff5ff"
             text "Her Morning" size 27 color "#df8bdd"
-            text "v0.4.2 • Framing + Character Fix" size 17 color "#bcaec0"
+            text "v0.5.0 • Production Character Set" size 17 color "#bcaec0"
             null height 5
             textbutton "START" action Start() xsize 360
             textbutton "VISUAL ARCHIVE" action ShowMenu('asset_gallery') xsize 360

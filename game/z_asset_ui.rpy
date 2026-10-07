@@ -62,12 +62,12 @@ screen reality_select():
         grid 3 2:
             spacing 14
             xalign .5
-            use asset_route_card('avery','Avery Lane',26,'Event planner. Social confidence and a complicated flirtation.','images/sprite_avery_lane.png')
-            use asset_route_card('mia','Mia Hart',29,'Consultant. Married life expects instant familiarity.','images/sprite_mia_hart.png')
-            use asset_route_card('chloe','Chloe Vale',25,'Creator. Public confidence, fiancé, and cameras everywhere.','images/sprite_chloe_vale.png')
-            use asset_route_card('naomi','Naomi Cross',33,'Tattoo artist. Studio owner with an unresolved ex.','images/sprite_naomi_cross.png')
-            use asset_route_card('lila','Lila Morgan',28,'Pastry chef. Secret girlfriend and a busy café staff.','images/sprite_lila_morgan.png')
-            use asset_route_card('rhea','Rhea Park',30,'DJ/club manager. Nightlife reputation and a knowing bartender.','images/sprite_rhea_park.png')
+            use asset_route_card('avery','Avery Lane',26,'Event planner. Social confidence and a complicated flirtation.','images/characters/avery.png')
+            use asset_route_card('mia','Mia Hart',29,'Consultant. Married life expects instant familiarity.','images/characters/mia.png')
+            use asset_route_card('chloe','Chloe Vale',25,'Creator. Public confidence, fiancé, and cameras everywhere.','images/characters/chloe.png')
+            use asset_route_card('naomi','Naomi Cross',33,'Tattoo artist. Studio owner with an unresolved ex.','images/characters/naomi.png')
+            use asset_route_card('lila','Lila Morgan',28,'Pastry chef. Secret girlfriend and a busy café staff.','images/characters/lila.png')
+            use asset_route_card('rhea','Rhea Park',30,'DJ/club manager. Nightlife reputation and a knowing bartender.','images/characters/rhea.png')
 
 screen bedroom_hub():
     modal True
@@ -85,17 +85,17 @@ screen bedroom_hub():
             text "Acceptance: [acceptance]" size 19
             null height 4
             if reality_id == 'avery':
-                add Transform('images/sprite_avery_lane.png', zoom=.23) xalign .5
+                add Transform('images/characters/avery.png', zoom=.23) xalign .5
             elif reality_id == 'mia':
-                add Transform('images/sprite_mia_hart.png', zoom=.23) xalign .5
+                add Transform('images/characters/mia.png', zoom=.23) xalign .5
             elif reality_id == 'chloe':
-                add Transform('images/sprite_chloe_vale.png', zoom=.23) xalign .5
+                add Transform('images/characters/chloe.png', zoom=.23) xalign .5
             elif reality_id == 'naomi':
-                add Transform('images/sprite_naomi_cross.png', zoom=.20) xalign .5
+                add Transform('images/characters/naomi.png', zoom=.20) xalign .5
             elif reality_id == 'lila':
-                add Transform('images/sprite_lila_morgan.png', zoom=.20) xalign .5
+                add Transform('images/characters/lila.png', zoom=.20) xalign .5
             else:
-                add Transform('images/sprite_rhea_park.png', zoom=.20) xalign .5
+                add Transform('images/characters/rhea.png', zoom=.20) xalign .5
     vbox:
         xalign .79 yalign .50 spacing 14
         text "What do you check?" size 32 bold True xalign .5
@@ -122,12 +122,12 @@ screen asset_gallery():
                 grid 3 2:
                     spacing 14
                     for nm, sprite in [
-                        ('Avery Lane','images/sprite_avery_lane.png'),
-                        ('Mia Hart','images/sprite_mia_hart.png'),
-                        ('Chloe Vale','images/sprite_chloe_vale.png'),
-                        ('Naomi Cross','images/sprite_naomi_cross.png'),
-                        ('Lila Morgan','images/sprite_lila_morgan.png'),
-                        ('Rhea Park','images/sprite_rhea_park.png')]:
+                        ('Avery Lane','images/characters/avery.png'),
+                        ('Mia Hart','images/characters/mia.png'),
+                        ('Chloe Vale','images/characters/chloe.png'),
+                        ('Naomi Cross','images/characters/naomi.png'),
+                        ('Lila Morgan','images/characters/lila.png'),
+                        ('Rhea Park','images/characters/rhea.png')]:
                         frame:
                             xsize 330 ysize 235
                             background Solid("#251c2ddd")
