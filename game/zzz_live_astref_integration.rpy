@@ -1,4 +1,4 @@
-# Wishbound v0.5.0 — production character set + live AstRef integration.
+# Wishbound v0.5.1 — reviewed ZIP-derived character set + live AstRef integration.
 # This late-loading layer replaces the old geometric placeholder visuals.
 
 init -10 python:
@@ -147,7 +147,7 @@ screen main_menu():
             spacing 11
             text "WISHBOUND" size 54 bold True color "#fff5ff"
             text "Her Morning" size 27 color "#df8bdd"
-            text "v0.5.0 • Production Character Set" size 17 color "#bcaec0"
+            text "v0.5.1 • ZIP Character Set" size 17 color "#bcaec0"
             null height 5
             textbutton "START" action Start() xsize 360
             textbutton "VISUAL ARCHIVE" action ShowMenu('asset_gallery') xsize 360
