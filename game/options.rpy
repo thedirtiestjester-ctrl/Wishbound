@@ -1,5 +1,5 @@
 define config.name = _("Wishbound: Her Morning")
-define config.version = "0.4.0"
+define config.version = "0.4.1"
 define build.name = "wishbound_her_morning"
 define config.save_directory = "WishboundHerMorning-02"
 define config.window = "auto"
