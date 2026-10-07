@@ -24,7 +24,7 @@ screen main_menu():
             spacing 16
             text "WISHBOUND" size 56 bold True color "#fff5ff"
             text "Her Morning" size 28 color "#df8bdd"
-            text "v0.3 • Asset Integration" size 18 color "#bcaec0"
+            text "v0.5.2 • Redistributable Original Assets" size 18 color "#bcaec0"
             null height 10
             textbutton "START" action Start() xsize 360
             textbutton "VISUAL ARCHIVE" action ShowMenu('asset_gallery') xsize 360
@@ -118,7 +118,7 @@ screen asset_gallery():
             vbox:
                 spacing 18
                 text "CHARACTERS" size 30 bold True color "#ef9bea"
-                text "Wishbound-owned character assets currently wired into the routes." size 19 color "#bcaec0"
+                text "Wishbound original/generated character assets currently wired into the routes." size 19 color "#bcaec0"
                 grid 3 2:
                     spacing 14
                     for nm, sprite in [
