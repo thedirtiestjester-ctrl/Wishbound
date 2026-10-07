@@ -46,7 +46,7 @@ jobs:
           import zipfile, io, json, hashlib
           from PIL import Image
           out=Path('/tmp/candidates'); out.mkdir(parents=True,exist_ok=True)
-          rows=[]; seen=set(); idx=0
+          rows=[]; seen=set(); idx=0; group_counts={}
           for zpath in sorted(Path('/tmp/wb').glob('*.zip')):
               with zipfile.ZipFile(zpath) as z:
                   for n in z.namelist():
@@ -67,6 +67,13 @@ jobs:
                       transparent_ratio=alpha_pixels/(w*hgt)
                       # Character-layer candidates: meaningful transparency, portrait/tall bounds.
                       if transparent_ratio < .08 or bh < 300 or bh < bw*1.15: continue
+                      parts=Path(n).parts
+                      source=parts[1] if len(parts)>2 and parts[0]=='Wbasts' else zpath.name
+                      stem=Path(n).stem
+                      char_key=stem.split('_')[0] if '_' in stem else stem[:6]
+                      group=(source,char_key)
+                      if group_counts.get(group,0)>=5: continue
+                      group_counts[group]=group_counts.get(group,0)+1
                       idx+=1
                       fn=f'cand_{idx:04d}.png'
                       # Composite on neutral gray for review, preserving original separately.
@@ -75,8 +82,8 @@ jobs:
                       canvas.convert('RGB').save(out/fn)
                       (out/f'orig_{idx:04d}.png').write_bytes(data)
                       rows.append({'candidate':fn,'original':f'orig_{idx:04d}.png','zip':zpath.name,'path':n,'size':[w,hgt],'bbox':[bw,bh],'transparent_ratio':round(transparent_ratio,4),'sha256':h})
-                      if idx>=180: break
-              if idx>=180: break
+                      if idx>=240: break
+              if idx>=240: break
           (out/'manifest.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
           print('candidates',len(rows))
           PY
