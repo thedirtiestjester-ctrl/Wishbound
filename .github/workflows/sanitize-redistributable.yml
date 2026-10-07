@@ -1,0 +1,103 @@
+name: Sanitize Redistributable Build
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/sanitize-redistributable.yml'
+  workflow_dispatch:
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore Wishbound-owned generated art
+        shell: bash
+        run: |
+          set -euo pipefail
+          SAFE_COMMIT=acd445632366393aa82a54969b03bd3a42c34270
+          git checkout "$SAFE_COMMIT" -- \
+            game/images/bg_title.png \
+            game/images/bg_void.png \
+            game/images/bg_bedroom.png \
+            game/images/bg_bathroom.png \
+            game/images/bg_closet.png \
+            game/images/bg_phone.png \
+            game/images/bg_kitchen.png \
+            game/images/bg_city.png \
+            game/images/bg_event_venue.png \
+            game/images/bg_office_lobby.png \
+            game/images/bg_photo_studio.png \
+            game/images/bg_tattoo_studio.png \
+            game/images/bg_cafe.png \
+            game/images/bg_rooftop_club.png \
+            game/images/fx_wish.png \
+            game/images/sprite_avery_lane.png \
+            game/images/sprite_mia_hart.png \
+            game/images/sprite_chloe_vale.png \
+            game/images/sprite_naomi_cross.png \
+            game/images/sprite_lila_morgan.png \
+            game/images/sprite_rhea_park.png
+
+          mkdir -p game/images/characters
+          cp game/images/sprite_avery_lane.png game/images/characters/avery.png
+          cp game/images/sprite_mia_hart.png game/images/characters/mia.png
+          cp game/images/sprite_chloe_vale.png game/images/characters/chloe.png
+          cp game/images/sprite_naomi_cross.png game/images/characters/naomi.png
+          cp game/images/sprite_lila_morgan.png game/images/characters/lila.png
+          cp game/images/sprite_rhea_park.png game/images/characters/rhea.png
+
+      - name: Remove non-redistributable imported art
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf game/images/astref_safe AstRef
+          rm -f game/zz_astref_safe_ui.rpy game/zzz_live_astref_integration.rpy
+          rm -f .github/workflows/character-review-sheet.yml
+          rm -f .github/workflows/import-adult-zip-characters.yml
+
+      - name: Set v0.5.2 redistributable metadata
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          p=Path("game/options.rpy")
+          s=p.read_text()
+          import re
+          s=re.sub(r'define config.version = "[^"]+"', 'define config.version = "0.5.2"', s)
+          p.write_text(s)
+
+          p=Path("android.json")
+          d=json.loads(p.read_text())
+          d["version"]="0.5.2"
+          d["numeric_version"]=9
+          p.write_text(json.dumps(d, indent=2)+"\n")
+
+          p=Path("game/z_asset_ui.rpy")
+          s=p.read_text()
+          s=s.replace('text "v0.3 • Asset Integration" size 18 color "#bcaec0"',
+                      'text "v0.5.2 • Redistributable Original Assets" size 18 color "#bcaec0"')
+          s=s.replace("Wishbound-owned character assets currently wired into the routes.",
+                      "Wishbound original/generated character assets currently wired into the routes.")
+          p.write_text(s)
+          PY
+
+      - name: Commit sanitized build tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wishbound-build-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Sanitize v0.5.2 redistributable asset build"
+            git push origin HEAD:main
+          fi
