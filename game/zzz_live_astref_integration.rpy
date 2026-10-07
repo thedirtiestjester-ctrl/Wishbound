@@ -1,4 +1,4 @@
-# Wishbound v0.4.1 — live AstRef integration.
+# Wishbound v0.5.0 — production character set + live AstRef integration.
 # This late-loading layer replaces the old geometric placeholder visuals.
 
 init -10 python:
