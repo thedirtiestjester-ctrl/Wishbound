@@ -20,31 +20,49 @@ init -10 python:
         "rhea": "Rhea Park",
     }
 
-# Full-screen scene replacements. Source art is 4:3; these transforms fill 16:9
-# by scaling and center-cropping rather than stretching.
-image bg title = Transform("images/astref_safe/wb_safe_0047_background.webp", zoom=2.5, yoffset=-120)
-image bg void = Transform("images/astref_safe/wb_safe_0062_background.webp", zoom=2.5, yoffset=-120)
-image bg bedroom = Transform("images/astref_safe/wb_safe_0017_background.webp", zoom=2.5, yoffset=-120)
-image bg bathroom = Transform("images/astref_safe/wb_safe_0056_background.webp", zoom=2.5, yoffset=-120)
-image bg closet = Transform("images/astref_safe/wb_safe_0049_background.webp", zoom=2.5, yoffset=-120)
-image bg phone = Transform("images/astref_safe/wb_safe_0007_prop.webp", zoom=2.5, yoffset=-120)
-image bg kitchen = Transform("images/astref_safe/wb_safe_0070_background.webp", zoom=2.5, yoffset=-120)
-image bg city = Transform("images/astref_safe/wb_safe_0046_background.webp", zoom=2.5, yoffset=-120)
-image bg event_venue = Transform("images/astref_safe/wb_safe_0042_background.webp", zoom=2.5, yoffset=-120)
-image bg office_lobby = Transform("images/astref_safe/wb_safe_0075_background.webp", zoom=2.5, yoffset=-120)
-image bg photo_studio = Transform("images/astref_safe/wb_safe_0041_background.webp", zoom=2.5, yoffset=-120)
-image bg tattoo_studio = Transform("images/astref_safe/wb_safe_0055_background.webp", zoom=2.5, yoffset=-120)
-image bg cafe = Transform("images/astref_safe/wb_safe_0070_background.webp", zoom=2.5, yoffset=-120)
-image bg rooftop_club = Transform("images/astref_safe/wb_safe_0068_background.webp", zoom=2.5, yoffset=-120)
+    WB_ROUTE_SPRITES = {
+        "avery": "images/sprite_avery_lane.png",
+        "mia": "images/sprite_mia_hart.png",
+        "chloe": "images/sprite_chloe_vale.png",
+        "naomi": "images/sprite_naomi_cross.png",
+        "lila": "images/sprite_lila_morgan.png",
+        "rhea": "images/sprite_rhea_park.png",
+    }
 
-# Disable the old stick-figure sprite placeholders. Reviewed character art will
-# replace these in a later character-art pass.
-image avery = Null(1, 1)
-image mia = Null(1, 1)
-image chloe = Null(1, 1)
-image naomi = Null(1, 1)
-image lila = Null(1, 1)
-image rhea = Null(1, 1)
+# Source art is 4:3. Keep the complete composition visible instead of
+# center-cropping it. The 960x720 art is centered inside the 1280x720 stage.
+init -9 python:
+    def wb_fit_bg(path):
+        return Composite(
+            (1280, 720),
+            (0, 0), Solid("#08060b"),
+            (160, 0), Transform(path, xysize=(960, 720))
+        )
+
+image bg title = wb_fit_bg("images/astref_safe/wb_safe_0047_background.webp")
+image bg void = wb_fit_bg("images/astref_safe/wb_safe_0062_background.webp")
+image bg bedroom = wb_fit_bg("images/astref_safe/wb_safe_0017_background.webp")
+image bg bathroom = wb_fit_bg("images/astref_safe/wb_safe_0056_background.webp")
+image bg closet = wb_fit_bg("images/astref_safe/wb_safe_0049_background.webp")
+image bg phone = wb_fit_bg("images/astref_safe/wb_safe_0007_prop.webp")
+image bg kitchen = wb_fit_bg("images/astref_safe/wb_safe_0070_background.webp")
+image bg city = wb_fit_bg("images/astref_safe/wb_safe_0046_background.webp")
+image bg event_venue = wb_fit_bg("images/astref_safe/wb_safe_0042_background.webp")
+image bg office_lobby = wb_fit_bg("images/astref_safe/wb_safe_0075_background.webp")
+image bg photo_studio = wb_fit_bg("images/astref_safe/wb_safe_0041_background.webp")
+image bg tattoo_studio = wb_fit_bg("images/astref_safe/wb_safe_0055_background.webp")
+image bg cafe = wb_fit_bg("images/astref_safe/wb_safe_0070_background.webp")
+image bg rooftop_club = wb_fit_bg("images/astref_safe/wb_safe_0068_background.webp")
+
+# Restore the current Wishbound character layer so story scenes are not empty.
+# These remain temporary character placeholders until a reviewed production
+# character-art pass replaces them.
+image avery = Transform("images/sprite_avery_lane.png", zoom=.76)
+image mia = Transform("images/sprite_mia_hart.png", zoom=.76)
+image chloe = Transform("images/sprite_chloe_vale.png", zoom=.76)
+image naomi = Transform("images/sprite_naomi_cross.png", zoom=.58)
+image lila = Transform("images/sprite_lila_morgan.png", zoom=.58)
+image rhea = Transform("images/sprite_rhea_park.png", zoom=.58)
 
 screen wb_route_card(rid, nm, age, blurb):
     button:
@@ -55,22 +73,24 @@ screen wb_route_card(rid, nm, age, blurb):
         fixed:
             xfill True yfill True
             add Transform(WB_ROUTE_VISUALS[rid], xysize=(350, 245))
-            add Solid("#09060bb8")
+            add Solid("#09060b99")
+            add Transform(WB_ROUTE_SPRITES[rid], fit="contain", xysize=(145, 195)) xalign .17 yalign .96
             frame:
                 xalign .5 yalign .5
-                xsize 310 ysize 205
-                background Solid("#0a0710a8")
-                padding (16, 13)
+                xalign .73
+                xsize 225 ysize 205
+                background Solid("#0a0710b8")
+                padding (12, 13)
                 vbox:
                     spacing 5
                     xalign .5 yalign .5
                     text nm size 29 bold True xalign .5
                     text "Age [age]" size 18 color "#ef9bea" xalign .5
-                    text blurb size 17 xsize 275 text_align .5 xalign .5
+                    text blurb size 15 xsize 195 text_align .5 xalign .5
 
 screen reality_select():
     modal True
-    add Transform("images/astref_safe/wb_safe_0062_background.webp", zoom=2.5, yoffset=-120)
+    add wb_fit_bg("images/astref_safe/wb_safe_0062_background.webp")
     add Solid("#07040bc9")
     vbox:
         xalign .5 yalign .5 spacing 15
@@ -106,7 +126,8 @@ screen bedroom_hub():
                 xsize 315 ysize 210
                 background Solid("#120d18")
                 add Transform(WB_ROUTE_VISUALS.get(reality_id, WB_ROUTE_VISUALS["avery"]), xysize=(295, 166)) xalign .5 yalign .12
-                text WB_ROUTE_NAMES.get(reality_id, reality_name) size 20 bold True xalign .5 yalign .93
+                add Transform(WB_ROUTE_SPRITES.get(reality_id, WB_ROUTE_SPRITES["avery"]), fit="contain", xysize=(105, 150)) xalign .16 yalign .91
+                text WB_ROUTE_NAMES.get(reality_id, reality_name) size 20 bold True xalign .62 yalign .93
     vbox:
         xalign .79 yalign .50 spacing 14
         text "What do you check?" size 32 bold True xalign .5
@@ -119,7 +140,7 @@ screen bedroom_hub():
 
 screen main_menu():
     tag menu
-    add Transform("images/astref_safe/wb_safe_0047_background.webp", zoom=2.5, yoffset=-120)
+    add wb_fit_bg("images/astref_safe/wb_safe_0047_background.webp")
     add Solid("#08050b77")
     frame:
         xalign .82 yalign .54
@@ -129,7 +150,7 @@ screen main_menu():
             spacing 11
             text "WISHBOUND" size 54 bold True color "#fff5ff"
             text "Her Morning" size 27 color "#df8bdd"
-            text "v0.4.1 • Live AstRef Integration" size 17 color "#bcaec0"
+            text "v0.4.2 • Framing + Character Fix" size 17 color "#bcaec0"
             null height 5
             textbutton "START" action Start() xsize 360
             textbutton "VISUAL ARCHIVE" action ShowMenu('asset_gallery') xsize 360
