@@ -1,0 +1,721 @@
+{
+  "version": 1,
+  "identity_model": "wishbound_native",
+  "backgrounds": [
+    {
+      "id": "WB-BG-001",
+      "runtime_path": "images/real_assets/backgrounds/h_010.webp",
+      "sha256": "288acf20efdafe6514407b701a95cf523f65461add952b64a2b7e35af449741e"
+    },
+    {
+      "id": "WB-BG-002",
+      "runtime_path": "images/real_assets/backgrounds/h_012.webp",
+      "sha256": "174646ca343514e5d79f682cb3dcc0673ecd9444f06dae6bc7e81df66fe62788"
+    },
+    {
+      "id": "WB-BG-003",
+      "runtime_path": "images/real_assets/backgrounds/h_020.webp",
+      "sha256": "de7956431d75d0bdad1f5e1d1951e453b2e97e403434ee2bb4ef818fd3aa8655"
+    },
+    {
+      "id": "WB-BG-004",
+      "runtime_path": "images/real_assets/backgrounds/h_021.webp",
+      "sha256": "d776d0463328ab10912541f74400e2c5b2e78914893558ba6788c8f6b5d293a6"
+    },
+    {
+      "id": "WB-BG-005",
+      "runtime_path": "images/real_assets/backgrounds/h_030.webp",
+      "sha256": "34da29352b1b28452642539dda078c1c3ad2e0ac155585c376a9ca201f147e96"
+    },
+    {
+      "id": "WB-BG-006",
+      "runtime_path": "images/real_assets/backgrounds/h_032.webp",
+      "sha256": "cd1673d2dc3bb0953c1b0a6f9aedcd6c82485acf2151185076afa5cf5ae29e50"
+    },
+    {
+      "id": "WB-BG-007",
+      "runtime_path": "images/real_assets/backgrounds/h_040.webp",
+      "sha256": "9b25bb78ad1c82e6b51e2547a2063ac98b17bf1f465ec6609ebdeb54e7782c06"
+    },
+    {
+      "id": "WB-BG-008",
+      "runtime_path": "images/real_assets/backgrounds/h_042.webp",
+      "sha256": "6fa3450f7f3147b1dcb77c59257cf0c41f8f710e9fed81b7cf1eec0ed43b7f00"
+    },
+    {
+      "id": "WB-BG-009",
+      "runtime_path": "images/real_assets/backgrounds/h_061.webp",
+      "sha256": "93a80e56bad3f0d25d126bab43920ce7c5cc0685fc587227388917ee78fe8284"
+    },
+    {
+      "id": "WB-BG-010",
+      "runtime_path": "images/real_assets/backgrounds/h_062.webp",
+      "sha256": "98264033850e88e135881c6387f15fa70fbefca7c5520def5df7595142168775"
+    },
+    {
+      "id": "WB-BG-011",
+      "runtime_path": "images/real_assets/backgrounds/h_070.webp",
+      "sha256": "ffaf1b955f91f3add9d79c4a375b57936e5e6c550e5c74c1c53593bb697bc14e"
+    },
+    {
+      "id": "WB-BG-012",
+      "runtime_path": "images/real_assets/backgrounds/h_071.webp",
+      "sha256": "10eb2c83ba297e085fdef6347dec2c6cb60fa792841d7b3243acbc62ab42390e"
+    },
+    {
+      "id": "WB-BG-013",
+      "runtime_path": "images/real_assets/backgrounds/h_072.webp",
+      "sha256": "c838a8b275f9dc4a4f86634bd59ea25d2d086fbfea96a1b1c9a8f04877270ba3"
+    },
+    {
+      "id": "WB-BG-014",
+      "runtime_path": "images/real_assets/backgrounds/h_080.webp",
+      "sha256": "a9b44816e09707c15bb217e8e5c9bf3d2c543ef8276728592883c948974dac7c"
+    },
+    {
+      "id": "WB-BG-015",
+      "runtime_path": "images/real_assets/backgrounds/h_081.webp",
+      "sha256": "f7592b61e219d236bd1babaae5a27823258d464fc824c7020e9bfbe37f93520a"
+    },
+    {
+      "id": "WB-BG-016",
+      "runtime_path": "images/real_assets/backgrounds/h_090.webp",
+      "sha256": "7f8d2474221111cec4b1d8be8def6a1627877142d1a7ad7b5f1045b064e902ae"
+    },
+    {
+      "id": "WB-BG-017",
+      "runtime_path": "images/real_assets/backgrounds/h_091.webp",
+      "sha256": "5b10fcfddccdb8cd0c861e84a508196295c8a75e688d64c9711a6e3157376a24"
+    },
+    {
+      "id": "WB-BG-018",
+      "runtime_path": "images/real_assets/backgrounds/h_110.webp",
+      "sha256": "ae00ffbdaa4bfb7bd8b6ab8f71213afcf55580e6a82ac7febc8b52881793bfcb"
+    },
+    {
+      "id": "WB-BG-019",
+      "runtime_path": "images/real_assets/backgrounds/h_111.webp",
+      "sha256": "90e77bc9feca8323822adf34e99d904df806ba391028927c66a37abed5ee4161"
+    },
+    {
+      "id": "WB-BG-020",
+      "runtime_path": "images/real_assets/backgrounds/h_112.webp",
+      "sha256": "f58afc207d986235652fe10534dc577db7952ac5b9dd7ea4336ddb5814181fc3"
+    },
+    {
+      "id": "WB-BG-021",
+      "runtime_path": "images/real_assets/backgrounds/h_113.webp",
+      "sha256": "17a7327d2af093aeb03401976abee22d871a401f66a058c50dfbe694308f49f7"
+    },
+    {
+      "id": "WB-BG-022",
+      "runtime_path": "images/real_assets/backgrounds/h_114.webp",
+      "sha256": "a631250ff0eb228bd05a919e5015af12da4e651d65f0474a6ac197fd0591b0d6"
+    },
+    {
+      "id": "WB-BG-023",
+      "runtime_path": "images/real_assets/backgrounds/h_120.webp",
+      "sha256": "e07fda676e5692e9dcb5fdb09c961bb5e323cde32d7ca8b7debe833ae5e0b3a0"
+    },
+    {
+      "id": "WB-BG-024",
+      "runtime_path": "images/real_assets/backgrounds/h_123.webp",
+      "sha256": "3fc82053dad645a45b48a55e437306613f462b508601454e1094b554c8df01e5"
+    },
+    {
+      "id": "WB-BG-025",
+      "runtime_path": "images/real_assets/backgrounds/h_124.webp",
+      "sha256": "fc44c8ed88cd4ead95c7466d6fd2bde98d41569d3049e93e87f191530d0979f3"
+    },
+    {
+      "id": "WB-BG-026",
+      "runtime_path": "images/real_assets/backgrounds/h_125.webp",
+      "sha256": "c248003b99c0edca8dc1f731f6dcd674e6e1a32a14c44b97d06ca76bcdf75f51"
+    },
+    {
+      "id": "WB-BG-027",
+      "runtime_path": "images/real_assets/backgrounds/h_130.webp",
+      "sha256": "a9da4f4069da117744d1e4c981ec419a3db14e739a663653771c072cac6b2a2d"
+    },
+    {
+      "id": "WB-BG-028",
+      "runtime_path": "images/real_assets/backgrounds/h_131.webp",
+      "sha256": "73dc821296654a8da1df25014b87394854c33f82df2e8bb804a315194aa1cb76"
+    },
+    {
+      "id": "WB-BG-029",
+      "runtime_path": "images/real_assets/backgrounds/h_141.webp",
+      "sha256": "80642af33b1fb039725a18dd438f31348f74cde20eccc000f6392977fe0d82e8"
+    },
+    {
+      "id": "WB-BG-030",
+      "runtime_path": "images/real_assets/backgrounds/h_150.webp",
+      "sha256": "4b3b95840d27f79c121d1aa9a8d923c3013c8662f18723f205b8da1c770f7757"
+    },
+    {
+      "id": "WB-BG-031",
+      "runtime_path": "images/real_assets/backgrounds/h_153.webp",
+      "sha256": "11d28287ad3c92e8034fd9929ee8885809e40adb5abe94b2fa8f85e8e254b709"
+    },
+    {
+      "id": "WB-BG-032",
+      "runtime_path": "images/real_assets/backgrounds/h_160.webp",
+      "sha256": "9f5b1c43be59e150dc96e9fc4c9eb7a04ef83dd29167b8b6085874fc269c71e6"
+    },
+    {
+      "id": "WB-BG-033",
+      "runtime_path": "images/real_assets/backgrounds/h_170.webp",
+      "sha256": "fc353cb4b9e875d81464172c03093091549f55496c6ebedbc75110dfd56a3a39"
+    },
+    {
+      "id": "WB-BG-034",
+      "runtime_path": "images/real_assets/backgrounds/h_171.webp",
+      "sha256": "810cca7ac1c151d70e20f873e13652a81719de8acb8abc4eab463d57c77f9c93"
+    },
+    {
+      "id": "WB-BG-035",
+      "runtime_path": "images/real_assets/backgrounds/h_172.webp",
+      "sha256": "37d4259d642d041b0e55890d046bddfb58d2e6a2b71a0c53b2c0503066f8cbb8"
+    },
+    {
+      "id": "WB-BG-036",
+      "runtime_path": "images/real_assets/backgrounds/h_180.webp",
+      "sha256": "f2089f704b368ff80bb6053ee75e29736611026a84363172e6f1ae7397276a7f"
+    },
+    {
+      "id": "WB-BG-037",
+      "runtime_path": "images/real_assets/backgrounds/h_181.webp",
+      "sha256": "d06defde911494e39e194916bfb4d1568375f085f84f264f4498023a749d9350"
+    },
+    {
+      "id": "WB-BG-038",
+      "runtime_path": "images/real_assets/backgrounds/h_191.webp",
+      "sha256": "e8a407c99174fa2b144664387d9604febeb60d118801ddf3bd036078338c6fb1"
+    },
+    {
+      "id": "WB-BG-039",
+      "runtime_path": "images/real_assets/backgrounds/h_201.webp",
+      "sha256": "aa8a5eda33f209b9ae399062ebe984c259b1b83b4e12dd6c4eada8aaef61a937"
+    },
+    {
+      "id": "WB-BG-040",
+      "runtime_path": "images/real_assets/backgrounds/h_211.webp",
+      "sha256": "340eedae2246ef32aa9369005b3c1de1954df8df5e76f886059b70374a256f1f"
+    },
+    {
+      "id": "WB-BG-041",
+      "runtime_path": "images/real_assets/backgrounds/h_221.webp",
+      "sha256": "f6e9985433a47c3be5b279eca1e66c365d26171b3e8fad08ecb1638c409b033c"
+    },
+    {
+      "id": "WB-BG-042",
+      "runtime_path": "images/real_assets/backgrounds/h_231.webp",
+      "sha256": "e6fc2b583ec51a00faf4e355f501af66997c222ad9336de38913e3ca91a6573a"
+    },
+    {
+      "id": "WB-BG-043",
+      "runtime_path": "images/real_assets/backgrounds/h_241.webp",
+      "sha256": "8715a3ae814db01c4dab85210da5fb61b177955203d7283d894cf00331581ff3"
+    },
+    {
+      "id": "WB-BG-044",
+      "runtime_path": "images/real_assets/backgrounds/h_242.webp",
+      "sha256": "4e550516319dc67f80256e8a81177b3c10ec4feb990c90b75941cbe50c65a755"
+    },
+    {
+      "id": "WB-BG-045",
+      "runtime_path": "images/real_assets/backgrounds/h_251.webp",
+      "sha256": "77b8b86ebafb32f1a1ba874ca73fd5466f0500ca8f350cb49bcab88231a9b046"
+    },
+    {
+      "id": "WB-BG-046",
+      "runtime_path": "images/real_assets/backgrounds/h_260.webp",
+      "sha256": "a809a4a9d740f379cd6bebbc6009409c711f393d5648369308bd55efdf4e6974"
+    },
+    {
+      "id": "WB-BG-047",
+      "runtime_path": "images/real_assets/backgrounds/h_261.webp",
+      "sha256": "fb5ae7326f2451fbf0bc49cc92c25eb3b13210812bc713b1eb6aaae77d6a93d3"
+    },
+    {
+      "id": "WB-BG-048",
+      "runtime_path": "images/real_assets/backgrounds/h_272.webp",
+      "sha256": "4893c29f97f6ab45c1fb66260e932dc912dad9a6090b391883bcc120b8c8c218"
+    },
+    {
+      "id": "WB-BG-049",
+      "runtime_path": "images/real_assets/backgrounds/h_282.webp",
+      "sha256": "459ff5e38ff150af5c5922227ccbfb380760db6c8799be064ab0fa07b6b310a3"
+    },
+    {
+      "id": "WB-BG-050",
+      "runtime_path": "images/real_assets/backgrounds/h_290.webp",
+      "sha256": "feca3c0fd5a242931c5b75dfbb29a0ae84ffbc88f9a945fcd4baf14bbc42a43f"
+    },
+    {
+      "id": "WB-BG-051",
+      "runtime_path": "images/real_assets/backgrounds/h_291.webp",
+      "sha256": "8cb221beea6b6df2ef36fb93dc6b34a3058475c22c3091ec387ac8ef1acbb320"
+    },
+    {
+      "id": "WB-BG-052",
+      "runtime_path": "images/real_assets/backgrounds/h_292.webp",
+      "sha256": "5552c625d1ee69907d9f93048ae721a5a7ce2bba2c84ec8684c48c02259be45e"
+    },
+    {
+      "id": "WB-BG-053",
+      "runtime_path": "images/real_assets/backgrounds/h_300.webp",
+      "sha256": "2640ff88a75d1992a308f8cce8bafdd676ea8e7e350287b5197c6e1971cd94eb"
+    },
+    {
+      "id": "WB-BG-054",
+      "runtime_path": "images/real_assets/backgrounds/h_311.webp",
+      "sha256": "f8cf4ad3347e22de3deaf8c7eec85736843393dc8d61789d05b761fe801a43c8"
+    },
+    {
+      "id": "WB-BG-055",
+      "runtime_path": "images/real_assets/backgrounds/h_312.webp",
+      "sha256": "1a61a43a0d8aeaafd98023bebaaa5f0314d062e245e6277c737d4157b27e1145"
+    },
+    {
+      "id": "WB-BG-056",
+      "runtime_path": "images/real_assets/backgrounds/h_321.webp",
+      "sha256": "d716514ba640af8d03044201606d11950fef647ba9dbeba2fda7d6209c7a32a6"
+    },
+    {
+      "id": "WB-BG-057",
+      "runtime_path": "images/real_assets/backgrounds/h_331.webp",
+      "sha256": "6594dee855c5284e8aa385db7a9d7f45aa11d0d3902cd123d98814c75e82bd43"
+    },
+    {
+      "id": "WB-BG-058",
+      "runtime_path": "images/real_assets/backgrounds/h_341.webp",
+      "sha256": "42ec98b60d0b51a0d65a3f795a1b77871976d06216748450ff4f37c26c85a66b"
+    },
+    {
+      "id": "WB-BG-059",
+      "runtime_path": "images/real_assets/backgrounds/h_350.webp",
+      "sha256": "4ed0b56541d8b3a741e36f026930aac676bbd53b3f38594c1eda39624424828d"
+    },
+    {
+      "id": "WB-BG-060",
+      "runtime_path": "images/real_assets/backgrounds/h_351.webp",
+      "sha256": "b653326a8b6dfe2c87cf35ca983b30cbef99d15ac16ad00936d7b8cae4e902af"
+    },
+    {
+      "id": "WB-BG-061",
+      "runtime_path": "images/real_assets/backgrounds/h_360.webp",
+      "sha256": "72adbf51c83feebfcb299e8a1f1aebb00f9bf8996deb33c44d62284c8476554a"
+    },
+    {
+      "id": "WB-BG-062",
+      "runtime_path": "images/real_assets/backgrounds/h_370.webp",
+      "sha256": "56a60610044b1b55d2017f83b13f9eff993e43d0ffc78ec019b62fd393432c1f"
+    },
+    {
+      "id": "WB-BG-063",
+      "runtime_path": "images/real_assets/backgrounds/h_371.webp",
+      "sha256": "ca5942ae9b7d47024f8197b41cd43998625760f5f5a08229150ff7a3e426c54e"
+    },
+    {
+      "id": "WB-BG-064",
+      "runtime_path": "images/real_assets/backgrounds/h_372.webp",
+      "sha256": "2a7d2bf62febf4dba0bf83c9ab144171ca147f02054c05e76c1e6c4127b9c7cb"
+    },
+    {
+      "id": "WB-BG-065",
+      "runtime_path": "images/real_assets/backgrounds/h_380.webp",
+      "sha256": "43d54613f8c823cf264a531474d448702dff19d2a0a9be234eb78df01b9ad68e"
+    },
+    {
+      "id": "WB-BG-066",
+      "runtime_path": "images/real_assets/backgrounds/h_390.webp",
+      "sha256": "a621693ed8c0a82cb7a6e5fcd4775be9b2c192ab9d2246104427ccabebc15fbe"
+    }
+  ],
+  "props": [
+    {
+      "id": "WB-PROP-001",
+      "runtime_path": "images/real_assets/props/202_101.webp",
+      "sha256": "ea26c338ab54f91b6f2297a01bb48506ff416996e55a525ec2ca4260f15b18b0"
+    },
+    {
+      "id": "WB-PROP-002",
+      "runtime_path": "images/real_assets/props/202_102.webp",
+      "sha256": "c78adbe9407daea44c6b947b5f1782b1706fbf310142e745f6bc01c00782c60d"
+    },
+    {
+      "id": "WB-PROP-003",
+      "runtime_path": "images/real_assets/props/207_101.webp",
+      "sha256": "9bdc7706d0793f8d5ea9d799e6ed0c8362f4b8a94fd3c1c3eed66854aaadb128"
+    },
+    {
+      "id": "WB-PROP-004",
+      "runtime_path": "images/real_assets/props/306_201.webp",
+      "sha256": "a953b3d4f35fa73c9d9920f4bc8ed98ec08f22f5cb02c36dc67c6f3b648a4d38"
+    },
+    {
+      "id": "WB-PROP-005",
+      "runtime_path": "images/real_assets/props/306_304.webp",
+      "sha256": "fcc8f4f7e7115720905ecebe12c495f68baba597901a841dd68172dacd90b3cd"
+    },
+    {
+      "id": "WB-PROP-006",
+      "runtime_path": "images/real_assets/props/401_101.webp",
+      "sha256": "ead0d705cd39a17293bb579dff8d8383e2dec8c0156f8b8efb5e2156ba185acd"
+    },
+    {
+      "id": "WB-PROP-007",
+      "runtime_path": "images/real_assets/props/405_551.webp",
+      "sha256": "83e197d2290b4d017b1d71b4a90505971dfb959fadcf1b2b28cda5ea01698202"
+    },
+    {
+      "id": "WB-PROP-008",
+      "runtime_path": "images/real_assets/props/602_301.webp",
+      "sha256": "def25ea6620205662346affc9df104d55856e84cf1045576cdf9457cfc6d3dfe"
+    },
+    {
+      "id": "WB-PROP-009",
+      "runtime_path": "images/real_assets/props/604_201.webp",
+      "sha256": "092c1e52e390663108fd0039cbfc4afc01fbdb9cbb42a357c233fb1b5ad689a8"
+    },
+    {
+      "id": "WB-PROP-010",
+      "runtime_path": "images/real_assets/props/606_101.webp",
+      "sha256": "95e5b904c94b75f991719a7104d7b8f28c79f0793dcba846abe6943454c1803c"
+    }
+  ],
+  "characters": {
+    "avery": {
+      "primary": "images/characters/avery.png",
+      "variants": [
+        {
+          "id": "WB-AVERY-01",
+          "runtime_path": "images/real_assets/characters/avery/avery_01.webp",
+          "sha256": "ad8822f1d84952f8ce59b34133a30e4276214f249241190ba068e899acab3cbd"
+        },
+        {
+          "id": "WB-AVERY-02",
+          "runtime_path": "images/real_assets/characters/avery/avery_02.webp",
+          "sha256": "5e782beeb962712b4b35d354ec0a80712973d6cdf94b647de0cc7aefdf101162"
+        },
+        {
+          "id": "WB-AVERY-03",
+          "runtime_path": "images/real_assets/characters/avery/avery_03.webp",
+          "sha256": "87785c09fbfd78de1419a1890769850338299ee8a8c738c994582f22820db2f4"
+        },
+        {
+          "id": "WB-AVERY-04",
+          "runtime_path": "images/real_assets/characters/avery/avery_04.webp",
+          "sha256": "8dab317d1cdab1ea30d66671b3d35e7e5dd2db737dd3da3308228c15e2c8e8ae"
+        },
+        {
+          "id": "WB-AVERY-05",
+          "runtime_path": "images/real_assets/characters/avery/avery_05.webp",
+          "sha256": "778a6a66a717dd85f4ba69e68d72f420f13b4ce32b61c071b77296fa4d05a64a"
+        },
+        {
+          "id": "WB-AVERY-06",
+          "runtime_path": "images/real_assets/characters/avery/avery_06.webp",
+          "sha256": "7c794d316433b3370c90022386ef1acfe5093131c0edabc1a47c259218f32d3b"
+        },
+        {
+          "id": "WB-AVERY-07",
+          "runtime_path": "images/real_assets/characters/avery/avery_07.webp",
+          "sha256": "07864498c2dbde939088a384746cfb458de259aa0452d156c6a0e7e16be7f22b"
+        },
+        {
+          "id": "WB-AVERY-08",
+          "runtime_path": "images/real_assets/characters/avery/avery_08.png",
+          "sha256": "b0e7300f5c3b42646b73f4a0fb6e8a5fac8a02a02a1eb49b9737d3b600859674"
+        },
+        {
+          "id": "WB-AVERY-09",
+          "runtime_path": "images/real_assets/characters/avery/avery_09.webp",
+          "sha256": "c7ef7eb10aca3b8ec225fec1eb35b60d7eec87a10334070d8b6694f452772066"
+        },
+        {
+          "id": "WB-AVERY-10",
+          "runtime_path": "images/real_assets/characters/avery/avery_10.webp",
+          "sha256": "a1252f371e1d0169dcd46259b0eea550c018647072f3992d83f896fbeb402ea7"
+        },
+        {
+          "id": "WB-AVERY-11",
+          "runtime_path": "images/real_assets/characters/avery/avery_11.webp",
+          "sha256": "cb1e6884dde5d68d28f61a7fba6442c8f4cd3d9f2bfe5d647ecf9695cabac7a6"
+        },
+        {
+          "id": "WB-AVERY-12",
+          "runtime_path": "images/real_assets/characters/avery/avery_12.webp",
+          "sha256": "f388d2fd54fabec5c4decd047d38a0920191e3584fb16ebb8ba4e84d698dbd96"
+        },
+        {
+          "id": "WB-AVERY-13",
+          "runtime_path": "images/real_assets/characters/avery/avery_13.webp",
+          "sha256": "785633075680163479f0963f2baed694cc4e6b285561e69459018a541e49a540"
+        },
+        {
+          "id": "WB-AVERY-14",
+          "runtime_path": "images/real_assets/characters/avery/avery_14.webp",
+          "sha256": "9c946936fcd3832537d72ead91e5418120768f2de17afe59f7ef4af1cf53466f"
+        },
+        {
+          "id": "WB-AVERY-15",
+          "runtime_path": "images/real_assets/characters/avery/avery_15.webp",
+          "sha256": "ab0469f04d77f45e9d5a0db151f37f7370137f5b1c2598796429d59cc04acab1"
+        },
+        {
+          "id": "WB-AVERY-16",
+          "runtime_path": "images/real_assets/characters/avery/avery_16.webp",
+          "sha256": "81eea2b76bc5af313510f2405a16eeec4984f7aaf4a35a11be10cded4eee1e8c"
+        },
+        {
+          "id": "WB-AVERY-17",
+          "runtime_path": "images/real_assets/characters/avery/avery_17.webp",
+          "sha256": "2be8959cf1558ddd0b6f695e770b38352841b6414dbbcd47c134f1e157ec0182"
+        },
+        {
+          "id": "WB-AVERY-18",
+          "runtime_path": "images/real_assets/characters/avery/avery_18.webp",
+          "sha256": "ecbb3662a42fbef9cd6b45cc83e3d6dab585815c2c84c6319bc34429060616a4"
+        },
+        {
+          "id": "WB-AVERY-19",
+          "runtime_path": "images/real_assets/characters/avery/avery_19.webp",
+          "sha256": "c0e44032773a5b92fa39eeb6dac95c747b8ef82f5a09e847e9a3126d376f3789"
+        },
+        {
+          "id": "WB-AVERY-20",
+          "runtime_path": "images/real_assets/characters/avery/avery_20.webp",
+          "sha256": "a633809d8d0e66612e5f3c238f2e4d36c1950860e7dff16142ac27223d3f49fc"
+        },
+        {
+          "id": "WB-AVERY-21",
+          "runtime_path": "images/real_assets/characters/avery/avery_21.webp",
+          "sha256": "1987a7dcbdb47beb74d9ae7a99fb48d3a472235c6d386415d14dd10dc3b51837"
+        },
+        {
+          "id": "WB-AVERY-22",
+          "runtime_path": "images/real_assets/characters/avery/avery_22.webp",
+          "sha256": "3bdd1a73d581b7843bf301f1b395517c6f695d18fe4ba8452ccfce025e7434c1"
+        },
+        {
+          "id": "WB-AVERY-23",
+          "runtime_path": "images/real_assets/characters/avery/avery_23.webp",
+          "sha256": "e7ad1fa7481e1008dfea3caaf2f18d60275142bb97b588e03cc045418813a792"
+        },
+        {
+          "id": "WB-AVERY-24",
+          "runtime_path": "images/real_assets/characters/avery/avery_24.webp",
+          "sha256": "ef6207d173a5f155c95ece9f50ee7740e068b0d7dbfedece59edf8795baa621e"
+        },
+        {
+          "id": "WB-AVERY-25",
+          "runtime_path": "images/real_assets/characters/avery/avery_25.webp",
+          "sha256": "f59ee297dc3405d1b3bb5cea242e1004366a98c592fa20f50b042d6afc536a2e"
+        },
+        {
+          "id": "WB-AVERY-26",
+          "runtime_path": "images/real_assets/characters/avery/avery_26.webp",
+          "sha256": "3f32b6ad9150ec292500f1c6f3d71f35517f99a6acadd2a49dc098fe67b0b9fe"
+        }
+      ],
+      "publication_state": "reviewed_nonexplicit_adult_route"
+    },
+    "mia": {
+      "primary": "images/characters/mia.png",
+      "variants": [
+        {
+          "id": "WB-MIA-01",
+          "runtime_path": "images/real_assets/characters/mia/mia_01.webp",
+          "sha256": "415477e7cc678f8da2203ec736a877b0601e03ee5866ef3d4a231e833889f4d7"
+        },
+        {
+          "id": "WB-MIA-02",
+          "runtime_path": "images/real_assets/characters/mia/mia_02.webp",
+          "sha256": "298e7058285a7403a7f32583d9c2440491d799e751565437073ee999e72344fd"
+        },
+        {
+          "id": "WB-MIA-03",
+          "runtime_path": "images/real_assets/characters/mia/mia_03.webp",
+          "sha256": "65eef1d7abe11a8dd8998faf9619126fd3fb77dcc01b7d00fce8aafd777e9913"
+        }
+      ],
+      "publication_state": "reviewed_nonexplicit_adult_route"
+    },
+    "chloe": {
+      "primary": "images/characters/chloe.png",
+      "variants": [
+        {
+          "id": "WB-CHLOE-01",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_01.webp",
+          "sha256": "38c7c9265e7775c75e5ba13314a9c0b0ffbf8f8158ec57067dacb923387f226b"
+        },
+        {
+          "id": "WB-CHLOE-02",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_02.webp",
+          "sha256": "fb0491b0ce77fcae628b0d1bd4a10726f16b71dafe9b77372b5c4cc2dc0ee235"
+        },
+        {
+          "id": "WB-CHLOE-03",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_03.webp",
+          "sha256": "d08c2b528d9647e7b957886d0473556c29f5459b3de15a5091737010039573f0"
+        },
+        {
+          "id": "WB-CHLOE-04",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_04.webp",
+          "sha256": "bd96236476e0414c5722d2f5299d5d928c1d1acce463c1b845c408ea81b8bc89"
+        },
+        {
+          "id": "WB-CHLOE-05",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_05.webp",
+          "sha256": "08170292c443b85867c762672df8dfa1d89681ce9075c1353b66dfe428cb768c"
+        },
+        {
+          "id": "WB-CHLOE-06",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_06.webp",
+          "sha256": "58852832b98726d1aefa492a4d43b8ed6a0346a4fdfd00bbbe49b5533b0ff16d"
+        },
+        {
+          "id": "WB-CHLOE-07",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_07.webp",
+          "sha256": "336f7e74925cd9f2d0e3f2b31d4d77f7a8efdc5b1785f2f09a8a2718da43a52a"
+        },
+        {
+          "id": "WB-CHLOE-08",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_08.webp",
+          "sha256": "3b8cc256b73da415fee13e3a85d52dfe3b85e6fee570ca871ac0418f42ddea36"
+        },
+        {
+          "id": "WB-CHLOE-09",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_09.webp",
+          "sha256": "4c9b9f2487f0e8edb2c51fafe4ccbbfedebf88b90fd5edea60ae2f63085212b0"
+        },
+        {
+          "id": "WB-CHLOE-10",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_10.webp",
+          "sha256": "66754a9196570f91ecf681d9d6a38724122ae2f2238d464391ecd4e8a69eedbd"
+        },
+        {
+          "id": "WB-CHLOE-11",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_11.webp",
+          "sha256": "3e6ce73b172300c441099ce849d9872bc352541fc93c17f230b10c8cbf664720"
+        },
+        {
+          "id": "WB-CHLOE-12",
+          "runtime_path": "images/real_assets/characters/chloe/chloe_12.webp",
+          "sha256": "b63f46075c286032c631489fd223077c87c987ea7a3cf1d65b2276147b3c8395"
+        }
+      ],
+      "publication_state": "reviewed_nonexplicit_adult_route"
+    },
+    "naomi": {
+      "primary": "images/characters/naomi.png",
+      "variants": [
+        {
+          "id": "WB-NAOMI-01",
+          "runtime_path": "images/real_assets/characters/naomi/naomi_01.webp",
+          "sha256": "2430a9f38fca9c4ed30104815d82da8247f3656045159651461db66caeb83ae0"
+        },
+        {
+          "id": "WB-NAOMI-02",
+          "runtime_path": "images/real_assets/characters/naomi/naomi_02.webp",
+          "sha256": "46f44732cffe8f9e0e38f705271b530d7623aa997abc5e5b5b6927c9b103dc6f"
+        },
+        {
+          "id": "WB-NAOMI-03",
+          "runtime_path": "images/real_assets/characters/naomi/naomi_03.webp",
+          "sha256": "bc4369d3ce525290f7a8b848224b4227546d4f7fca7320b97dabcf2f2a5e6d48"
+        },
+        {
+          "id": "WB-NAOMI-04",
+          "runtime_path": "images/real_assets/characters/naomi/naomi_04.webp",
+          "sha256": "6c06c1ebaac638c10b769b689d3297a48230436ee242ae391d0ddc1de4115953"
+        }
+      ],
+      "publication_state": "reviewed_nonexplicit_adult_route"
+    },
+    "lila": {
+      "primary": "images/characters/lila.png",
+      "variants": [
+        {
+          "id": "WB-LILA-01",
+          "runtime_path": "images/real_assets/characters/lila/lila_01.webp",
+          "sha256": "adf6ed1d94489daace09f8d111b7adb77a23ec9cd52fff8f2e2388d318c7c660"
+        },
+        {
+          "id": "WB-LILA-02",
+          "runtime_path": "images/real_assets/characters/lila/lila_02.webp",
+          "sha256": "70bad88775926eefd987911c5ee2b274b6c545da547667f9345726bf6c471857"
+        },
+        {
+          "id": "WB-LILA-03",
+          "runtime_path": "images/real_assets/characters/lila/lila_03.webp",
+          "sha256": "14863b435b02dabdd18022614f5b37fbfadec3f8ff318f2a0b67af13f7f11daf"
+        },
+        {
+          "id": "WB-LILA-04",
+          "runtime_path": "images/real_assets/characters/lila/lila_04.webp",
+          "sha256": "799094e732637d86d588fdc6137d4c3fc1effcf42d748ae67274060ac1c0e327"
+        },
+        {
+          "id": "WB-LILA-05",
+          "runtime_path": "images/real_assets/characters/lila/lila_05.webp",
+          "sha256": "9cd9f589fa578bcd9c178ec14845f28f6e45c70871b4e9ffc06be42385c31796"
+        },
+        {
+          "id": "WB-LILA-06",
+          "runtime_path": "images/real_assets/characters/lila/lila_06.webp",
+          "sha256": "98928063fec8e62e0efcd1909173b19bb3259810ad58a6344f4b65d79a5a8f99"
+        },
+        {
+          "id": "WB-LILA-07",
+          "runtime_path": "images/real_assets/characters/lila/lila_07.webp",
+          "sha256": "041b2b98ddd411417ffbbc8b7a4813047fba6b125d07aad0ec2fcc7b9a573fe5"
+        }
+      ],
+      "publication_state": "reviewed_nonexplicit_adult_route"
+    },
+    "rhea": {
+      "primary": "images/characters/rhea.png",
+      "variants": [
+        {
+          "id": "WB-RHEA-01",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_01.webp",
+          "sha256": "f4bf027347ee54f6376987c4f1ad29a66bfc6d6ef475be0bed59619d8ed29bbb"
+        },
+        {
+          "id": "WB-RHEA-02",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_02.webp",
+          "sha256": "c74e581f8e71ef3741150d8997b415c1047954e77cfa6abece4ffe6ca5741a81"
+        },
+        {
+          "id": "WB-RHEA-03",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_03.webp",
+          "sha256": "c195f29d4316ebc261c429980ec5a2249e2afb02dfb40efc8232e1131c19879b"
+        },
+        {
+          "id": "WB-RHEA-04",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_04.webp",
+          "sha256": "badd658853f6e59342a050c4e1286d591c858fdf4ef9a6c0ce8ff43bd761b8b2"
+        },
+        {
+          "id": "WB-RHEA-05",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_05.webp",
+          "sha256": "6f2257cd420747f2ac9d14b3ec265749741d30424ad5f5c72efc70bb0a4a68dd"
+        },
+        {
+          "id": "WB-RHEA-06",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_06.webp",
+          "sha256": "c6fc1c6f04e1e24f11c6ce22160bd65e0a04df786cdb53fa28683691731ed202"
+        },
+        {
+          "id": "WB-RHEA-07",
+          "runtime_path": "images/real_assets/characters/rhea/rhea_07.webp",
+          "sha256": "2b73416ff730bceb506a3613fa4970b628632240a612c2bb8863e201f404d706"
+        }
+      ],
+      "publication_state": "reviewed_nonexplicit_adult_route"
+    }
+  }
+}
