@@ -1,0 +1,82 @@
+name: Review AstRef Character Candidates
+on:
+  push:
+    branches: [ main ]
+    paths: [ '.github/workflows/review-character-candidates.yml' ]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download staged ZIPs
+        env:
+          P01: https://ucdfa8aa68f34ab035d87fcb4be4.dl.dropboxusercontent.com/cd/0/get/DJiNH446UZEhSOaD9Bq_N7kCWZE0hworJaUK3zDOV2edUAy0lMp1DuNKCnfUH8nDj5oXXRMBEBR2LM273j8Mb_8QIY7VVYSu0ppFBWd_Qw3fWyKu3EeRUn8dfYetIlgtEf4kESkxuUvGXloAEEV83OyR4zn94tVD9mrTNEuJJ3FQFw/file?c_luid=1f041b3d
+          P02: https://ucf65d25bf440119be29f4a1a2cc.dl.dropboxusercontent.com/cd/0/get/DJgfSySgEiQeSEg943NM0_4pKkttLv_iWrG-rY-Ugwv0naNjOqsJAkL2lo8fb3j9dTmxvkc8j6p59YBw9lEvxcmcFl2Uf1d5Bk_EVPZ-aM1om0Fzfmx49zX9kAgf05P7WTY9ul6yx_2FrHiMvB-hWpSj3DFkzzaUpssTU8hJrP_thw/file?c_luid=1f041b3d
+          P03: https://uc803967d69122f2c60fceec1b8b.dl.dropboxusercontent.com/cd/0/get/DJhvubvxOn2ExXVx4w7CAEFO0n7_PVjfX7jEDzdsKEtx6ZSltE1bwWRw_AIijW02p6JPZ3WakAFD55WiptrVbjXsnPV3TbLEl0c3K2VHLD7ilgSqFx1oByrfuhTeQPxDHCrwB4IbUxnnvp79P44Tu-Ekn0BwJo0m_dwULkObzli8yw/file?c_luid=1f041b3d
+          P04: https://uca55d254cfba9560231c4004370.dl.dropboxusercontent.com/cd/0/get/DJhjfWQmecJlQ-64aPZOzltDmCntTJwNlGsZFON4FA0KiY4jun8RDu7feWeQQBiQNSdRBs-fS3xWefzvZ7Spnb-_zNt_LvcRBD1-I7tr9qdEYhfs9ZOzRmkkYgp2AMMVQSCigpOf9mg4UektiEFTVHm4hGWvPX41D-pjM1tOGbxjGA/file?c_luid=1f041b3d
+          P05: https://uc897807232a98b3be6d5ad39523.dl.dropboxusercontent.com/cd/0/get/DJhhLsqWdjVTOvCnFQqRVwvHa8Fcn_aAp8U7kug3CHxrn8grrv9zG_q_GLCSMF7GO4bcfsA7PhInxVQ-VNO5ATvm2E8IG-BoGaovUovVc-aCEYNsPMv6nzkUN7zpYNWtZ5RnNzz8iccA5x31WqlzH3QxI5dl1b8JiIxFQWGLEjWATw/file?c_luid=1f041b3d
+          P06: https://uc28e98b5c17c19417985f08f093.dl.dropboxusercontent.com/cd/0/get/DJhBS2HuC_KbubYVen6aZayjGhzqj84EqwOpyfBms3rg1ZshBXytOMEv0QDx4aX2PX0PtCA2bnCMRTxwtVEqdjdqYGU9Gx-xf0ETV1zviUFYFKGfz_w8KBmD-bLurOioIhBcMUtMYEM_CXwu1V-6rhbTBtiR7DVtPgxbn8_sSOI32w/file?c_luid=1f041b3d
+          P07: https://uc3d72a7a20e51309bfc0e66443a.dl.dropboxusercontent.com/cd/0/get/DJiIIYzoxh_6bXzTwgcNPYqv4TxvNTid-YqMKuiSGGAwJcCkoAlXMwjQgp4oTrUkrgYw0nspphnv38nCOZA6mjfkwnYpnV61w0jzvfl_r0RKvptavBJVPoR4t62rk7Av7IFmkKemuqpTaRS-ZJ7h1cAJxRbGwHZ_ZhgefdiaRWVwXQ/file?c_luid=1f041b3d
+          P08: https://uc41877d3455934a4d081a68a381.dl.dropboxusercontent.com/cd/0/get/DJgxXFzLo_7pEMYWm2AZmJ4DVCpZLkmsPtkU_j34G2Q6Q771dBFqg4HwGHtkwi9aUo6ed2lSpNPSSD49ei_vyUQllb8s6odD-5zrvTPYpqFi8NNM6f6zPuwUVez27v57Fqx6WPyGiOEH4xSWKTPU8AlhgoI05WdrHLChTn9oG7ueKw/file?c_luid=1f041b3d
+          P09: https://ucaff15c12f3a541aedc044403e1.dl.dropboxusercontent.com/cd/0/get/DJiEX7RPpGrYXO9NLUZg5VTTyq8TQPu1djJelNX9oFjJGCk6NF0jm2Sckgk8chhFwQ2vjNfXZKZ5zpMYXAlfJ0M_PgBNTKAmDtAED1PS2EYdr-d6gTNd156wD_Y-BeRIOiiLh94DAZ122qop8-9JoGIgDv9zs1-povl6tparFYoWmw/file?c_luid=1f041b3d
+          P10: https://uc72b77df7e2a90127d2d6fbfaff.dl.dropboxusercontent.com/cd/0/get/DJhbhyhf7-TL5iE8XXTA9F9A8rDQpL7u5NnJ793MCHuueC1a73S7YLcahqsDaNtoMJCZN-D9sLqb0VVz9N5McOS1LYx0QdIeaKKuU_BYgGpcg87xlzSfl0E1eYoPx6GJtE9mqPq6-3sd7kVfyokKYSnkOF3Sjf2erssgugENiJQrcw/file?c_luid=1f041b3d
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/wb
+          for n in $(seq -w 1 10); do
+            key="P${n}"
+            url="${!key}"
+            curl -fL --retry 2 --retry-delay 1 "$url" -o "/tmp/wb/part_${n}.zip"
+          done
+      - name: Extract likely transparent character candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile, io, json, hashlib
+          from PIL import Image
+          out=Path('/tmp/candidates'); out.mkdir(parents=True,exist_ok=True)
+          rows=[]; seen=set(); idx=0
+          for zpath in sorted(Path('/tmp/wb').glob('*.zip')):
+              with zipfile.ZipFile(zpath) as z:
+                  for n in z.namelist():
+                      if Path(n).suffix.lower() not in {'.png','.webp'}: continue
+                      data=z.read(n)
+                      h=hashlib.sha256(data).hexdigest()
+                      if h in seen: continue
+                      seen.add(h)
+                      try:
+                          im=Image.open(io.BytesIO(data)).convert('RGBA')
+                      except Exception: continue
+                      w,hgt=im.size
+                      a=im.getchannel('A')
+                      bbox=a.getbbox()
+                      if not bbox: continue
+                      bw,bh=bbox[2]-bbox[0],bbox[3]-bbox[1]
+                      alpha_pixels=sum(1 for p in a.getdata() if p<250)
+                      transparent_ratio=alpha_pixels/(w*hgt)
+                      # Character-layer candidates: meaningful transparency, portrait/tall bounds.
+                      if transparent_ratio < .08 or bh < 300 or bh < bw*1.15: continue
+                      idx+=1
+                      fn=f'cand_{idx:04d}.png'
+                      # Composite on neutral gray for review, preserving original separately.
+                      canvas=Image.new('RGBA', im.size, (128,128,128,255)); canvas.alpha_composite(im)
+                      canvas.convert('RGB').thumbnail((480,720))
+                      canvas.convert('RGB').save(out/fn)
+                      (out/f'orig_{idx:04d}.png').write_bytes(data)
+                      rows.append({'candidate':fn,'original':f'orig_{idx:04d}.png','zip':zpath.name,'path':n,'size':[w,hgt],'bbox':[bw,bh],'transparent_ratio':round(transparent_ratio,4),'sha256':h})
+                      if idx>=180: break
+              if idx>=180: break
+          (out/'manifest.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
+          print('candidates',len(rows))
+          PY
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: astref-character-candidates
+          path: /tmp/candidates
+          if-no-files-found: error
