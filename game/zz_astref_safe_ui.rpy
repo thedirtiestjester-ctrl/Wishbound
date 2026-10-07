@@ -1,4 +1,5 @@
 # Wishbound v0.4 - reviewed AstRef pack browser.
+# Pack status: 76 reviewed assets committed and packaged.
 # Loaded after z_asset_ui.rpy and therefore owns the final main/quick menu definitions.
 
 init -15 python:
