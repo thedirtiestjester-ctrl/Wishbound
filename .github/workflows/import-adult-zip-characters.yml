@@ -1,0 +1,135 @@
+name: Import Adult-Verified ZIP Characters
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/import-adult-zip-characters.yml'
+  workflow_dispatch:
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pillow
+        run: python -m pip install --quiet pillow
+
+      - name: Download reviewed ZIP candidate artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/candidates
+          curl -fL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/11478657096/zip" \
+            -o /tmp/candidates.zip
+          unzip -q /tmp/candidates.zip -d /tmp/candidates
+          test -f /tmp/candidates/manifest.json
+
+      - name: Build adult-verified Wishbound sprites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import json, hashlib
+
+          src = Path("/tmp/candidates")
+          dst = Path("game/images/characters")
+          dst.mkdir(parents=True, exist_ok=True)
+
+          # Every chosen source role was separately verified as adult:
+          # Avery: adult junior-college protagonist (female form), casual outfit
+          # Mia: university/pharmacy student
+          # Chloe: college student
+          # Naomi: school nurse
+          # Lila: same-age partner/classmate of adult junior-college protagonist, casual outfit
+          # Rhea: older stepsister of adult junior-college protagonist, casual outfit
+          chosen = {
+              "avery": 147,
+              "mia": 91,
+              "chloe": 226,
+              "naomi": 61,
+              "lila": 141,
+              "rhea": 225,
+          }
+
+          expected = {
+              147: "5e782beeb962712b4b35d354ec0a80712973d6cdf94b647de0cc7aefdf101162",
+              91:  "415477e7cc678f8da2203ec736a877b0601e03ee5866ef3d4a231e833889f4d7",
+              226: "38c7c9265e7775c75e5ba13314a9c0b0ffbf8f8158ec57067dacb923387f226b",
+              61:  "46f44732cffe8f9e0e38f705271b530d7623aa997abc5e5b5b6927c9b103dc6f",
+              141: "adf6ed1d94489daace09f8d111b7adb77a23ec9cd52fff8f2e2388d318c7c660",
+              225: "badd658853f6e59342a050c4e1286d591c858fdf4ef9a6c0ce8ff43bd761b8b2",
+          }
+
+          rows = json.loads((src / "manifest.json").read_text(encoding="utf-8"))
+          out_manifest = {}
+
+          for route, idx in chosen.items():
+              row = rows[idx - 1]
+              p = src / f"orig_{idx:04d}.png"
+              raw = p.read_bytes()
+              raw_hash = hashlib.sha256(raw).hexdigest()
+              # Candidate originals were stored byte-identically despite .png staging names.
+              if row.get("sha256") != expected[idx]:
+                  raise SystemExit(f"Manifest hash mismatch for candidate {idx}")
+
+              im = Image.open(p).convert("RGBA")
+              bbox = im.getchannel("A").getbbox()
+              if not bbox:
+                  raise SystemExit(f"No visible pixels in candidate {idx}")
+              im = im.crop(bbox)
+
+              max_w, max_h = 620, 860
+              scale = min(max_w / im.width, max_h / im.height, 1.75)
+              size = (max(1, round(im.width * scale)), max(1, round(im.height * scale)))
+              im = im.resize(size, Image.Resampling.LANCZOS)
+
+              canvas = Image.new("RGBA", (700, 900), (0, 0, 0, 0))
+              x = (700 - im.width) // 2
+              y = 900 - im.height
+              canvas.alpha_composite(im, (x, y))
+
+              out = dst / f"{route}.png"
+              canvas.save(out, optimize=True)
+
+              out_manifest[route] = {
+                  "wishbound_character": route,
+                  "runtime_path": f"images/characters/{route}.png",
+                  "publication_state": "cleared_adult_verified",
+                  "source_age_gate": "passed",
+                  "sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
+              }
+
+          m = Path("AstRef/manifests/zip_character_set.json")
+          m.parent.mkdir(parents=True, exist_ok=True)
+          m.write_text(json.dumps({
+              "version": 2,
+              "identity_model": "wishbound_native",
+              "character_context": "wishbound_only",
+              "characters": out_manifest,
+          }, indent=2), encoding="utf-8")
+          print("Imported adult-verified ZIP characters:", ", ".join(chosen))
+          PY
+
+      - name: Commit adult-verified ZIP character set
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wishbound-astref-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add game/images/characters AstRef/manifests/zip_character_set.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Replace character set with adult-verified ZIP sprites [skip ci]"
+            git push origin HEAD:main
+          fi
