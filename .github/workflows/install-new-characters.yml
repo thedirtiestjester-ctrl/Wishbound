@@ -1,0 +1,94 @@
+name: Install New Wishbound Characters
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/install-new-characters.yml'
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download original Wishbound character sheet
+        env:
+          SHEET_URL: https://uc62f63c2392599917f4601d102e.dl.dropboxusercontent.com/cd/0/get/DJik-CUeCU98hSYWMCNV8QIHLca6DSpzsXHOk847cYo3r4LIdCe0ZbXesrxCiofo92oJgkyuTGeioqAczChLWoh4CWqJoTMAr4IGAuLpYFRzBF7f1YIUSdyvS8EkB0nIXWSgPKO85H9_3pQhpDA5pO-ax_dqKpFRvdeQ-dXEAfBvzg/file?c_luid=1f041b3d
+        run: |
+          curl -fL "$SHEET_URL" -o /tmp/wishbound_characters.png
+      - name: Build six transparent production sprites
+        run: |
+          python -m pip install pillow numpy opencv-python-headless
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          import numpy as np, cv2
+          src=Image.open('/tmp/wishbound_characters.png').convert('RGBA')
+          out=Path('game/images/characters'); out.mkdir(parents=True,exist_ok=True)
+          W,H=src.size
+          names=['avery','mia','chloe','naomi','lila','rhea']
+          for idx,name in enumerate(names):
+              row=idx//3; col=idx%3
+              x0=round(col*W/3); x1=round((col+1)*W/3)
+              y0=round(row*H/2); y1=round((row+1)*H/2)
+              cell=src.crop((x0,y0,x1,y1))
+              a=cell.getchannel('A')
+              a=a.point(lambda p: 255 if p>90 else (0 if p<25 else int((p-25)*255/65)))
+              cell.putalpha(a)
+              bbox=cell.getbbox()
+              if bbox: cell=cell.crop(bbox)
+              canvas=Image.new('RGBA',(700,900),(0,0,0,0))
+              scale=min(660/cell.width,860/cell.height)
+              cell=cell.resize((int(cell.width*scale),int(cell.height*scale)),Image.Resampling.LANCZOS)
+              canvas.alpha_composite(cell,((700-cell.width)//2,900-cell.height-12))
+              arr=np.array(canvas)
+              mask=(arr[:,:,3]>20).astype('uint8')
+              n,labels,stats,_=cv2.connectedComponentsWithStats(mask,8)
+              if n>1:
+                  largest=1+np.argmax(stats[1:,cv2.CC_STAT_AREA])
+                  keep=(labels==largest)
+                  arr[:,:,3]=np.where(keep,arr[:,:,3],0)
+                  arr[:,:,:3]=np.where(keep[:,:,None],arr[:,:,:3],0)
+              Image.fromarray(arr,'RGBA').save(out/f'{name}.png',optimize=True)
+              print(name, out/f'{name}.png')
+          PY
+      - name: Replace all temporary sprite references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          mapping={
+            'images/sprite_avery_lane.png':'images/characters/avery.png',
+            'images/sprite_mia_hart.png':'images/characters/mia.png',
+            'images/sprite_chloe_vale.png':'images/characters/chloe.png',
+            'images/sprite_naomi_cross.png':'images/characters/naomi.png',
+            'images/sprite_lila_morgan.png':'images/characters/lila.png',
+            'images/sprite_rhea_park.png':'images/characters/rhea.png',
+          }
+          for fn in ['game/script.rpy','game/z_asset_ui.rpy','game/zzz_live_astref_integration.rpy']:
+              p=Path(fn); s=p.read_text(encoding='utf-8')
+              for old,new in mapping.items(): s=s.replace(old,new)
+              if fn.endswith('zzz_live_astref_integration.rpy'):
+                  s=s.replace('v0.4.2 • Framing + Character Fix','v0.5.0 • Production Character Set')
+                  s=s.replace('# Restore the current Wishbound character layer so story scenes are not empty.\n# These remain temporary character placeholders until a reviewed production\n# character-art pass replaces them.','# Original adult Wishbound production character set.')
+                  s=s.replace('zoom=.76','zoom=.72').replace('zoom=.58','zoom=.62')
+              p.write_text(s,encoding='utf-8')
+          opt=Path('game/options.rpy')
+          s=opt.read_text(encoding='utf-8').replace('define config.version = "0.4.2"','define config.version = "0.5.0"')
+          opt.write_text(s,encoding='utf-8')
+          import json
+          ap=Path('android.json'); d=json.loads(ap.read_text(encoding='utf-8'))
+          d['numeric_version']=7; d['version']='0.5.0'
+          ap.write_text(json.dumps(d,indent=2)+'\n',encoding='utf-8')
+          PY
+          rm -f game/images/sprite_avery_lane.png game/images/sprite_mia_hart.png game/images/sprite_chloe_vale.png game/images/sprite_naomi_cross.png game/images/sprite_lila_morgan.png game/images/sprite_rhea_park.png
+      - name: Commit new character set
+        run: |
+          git config user.name "wishbound-character-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add game/images/characters game/script.rpy game/z_asset_ui.rpy game/zzz_live_astref_integration.rpy game/options.rpy android.json
+          git add -u game/images
+          git commit -m "Replace temporary sprites with original Wishbound character set"
+          git push origin HEAD:main
