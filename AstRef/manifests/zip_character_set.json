@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "identity_model": "wishbound_native",
+  "characters": {
+    "avery": {
+      "wishbound_character": "avery",
+      "review_candidate": 54,
+      "runtime_path": "images/characters/avery.png",
+      "sha256": "0cbf20ca2e3db488e01e02cc4b0d232f118f6f961ebc19f6b6e2e140f08c66cd",
+      "review_status": "adult_looking_non_explicit"
+    },
+    "mia": {
+      "wishbound_character": "mia",
+      "review_candidate": 58,
+      "runtime_path": "images/characters/mia.png",
+      "sha256": "493c83e98e6408ea021f616a1345da451469f192ce6490b2982ce0545ad16e2c",
+      "review_status": "adult_looking_non_explicit"
+    },
+    "chloe": {
+      "wishbound_character": "chloe",
+      "review_candidate": 226,
+      "runtime_path": "images/characters/chloe.png",
+      "sha256": "e819005290e33f907221d0445f23c5174292721de9f8834151c6b4781287e1cd",
+      "review_status": "adult_looking_non_explicit"
+    },
+    "naomi": {
+      "wishbound_character": "naomi",
+      "review_candidate": 61,
+      "runtime_path": "images/characters/naomi.png",
+      "sha256": "fae222a17f7d4db46f56b3d648c79dac4a89bffed6ad2b129ca2ef4d07b39e41",
+      "review_status": "adult_looking_non_explicit"
+    },
+    "lila": {
+      "wishbound_character": "lila",
+      "review_candidate": 63,
+      "runtime_path": "images/characters/lila.png",
+      "sha256": "b8fa00613560d2ca8525df3161d9b5c0d9d00118f5fe52d6b603ba2c534fda7c",
+      "review_status": "adult_looking_non_explicit"
+    },
+    "rhea": {
+      "wishbound_character": "rhea",
+      "review_candidate": 225,
+      "runtime_path": "images/characters/rhea.png",
+      "sha256": "adbe2303480668c5df21e0a3750d2ed6a85b26fc8fc904765d2e899eecede852",
+      "review_status": "adult_looking_non_explicit"
+    }
+  }
+}
