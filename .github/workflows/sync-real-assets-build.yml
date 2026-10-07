@@ -1,0 +1,415 @@
+name: Sync Real Assets and Build Android
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/sync-real-assets-build.yml'
+  workflow_dispatch:
+
+env:
+  ANDROID_NDK_HOME: ""
+
+jobs:
+  sync-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install asset tooling
+        run: python -m pip install --quiet pillow
+
+      - name: Download Dropbox asset library
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://www.dropbox.com/scl/fo/k883fw760e8rozstcuojg/AKcf1HggQsJOKBLeuP9aYjQ?rlkey=fu8nosqtfnie0e77rcbarceom&st=d3flcuhn&dl=1'
+          curl -fL --retry 3 --retry-delay 2 "$url" -o /tmp/wishbound-assets.zip
+          unzip -q /tmp/wishbound-assets.zip -d /tmp/wishbound-assets
+          test "$(find /tmp/wishbound-assets -type f | wc -l)" -ge 2900
+
+      - name: Build Wishbound real asset library
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import hashlib, json, shutil, re
+
+          src = Path('/tmp/wishbound-assets')
+          out = Path('game/images/real_assets')
+          if out.exists():
+              shutil.rmtree(out)
+          (out/'backgrounds').mkdir(parents=True)
+          (out/'props').mkdir(parents=True)
+          (out/'characters').mkdir(parents=True)
+          Path('game/images/characters').mkdir(parents=True, exist_ok=True)
+          Path('asset_library').mkdir(parents=True, exist_ok=True)
+
+          by_name = {}
+          for p in src.rglob('*'):
+              if p.is_file():
+                  by_name.setdefault(p.name, p)
+
+          backgrounds = sorted(n for n in by_name if n.startswith('H_') and Path(n).suffix.lower() in {'.webp','.png','.jpg','.jpeg'})
+          if len(backgrounds) != 66:
+              raise SystemExit(f'Expected 66 reviewed backgrounds, found {len(backgrounds)}')
+
+          safe_props = [
+              '202_101.webp','202_102.webp','207_101.webp','306_201.webp','306_304.webp',
+              '401_101.webp','405_551.webp','602_301.webp','604_201.webp','606_101.webp'
+          ]
+
+          routes = {
+              'avery': [
+                  '626_mtakf2an.webp','627_mtakf2hf.webp','628_mtakf2ln.webp','629_mtakf2yn.webp','630_mtakf3hj.webp',
+                  '639_mtakf4af.webp','640_mtakf4bf.webp','641_mtakf4hn.png','642_mtakf4nf.webp','643_mtakf4qm.webp',
+                  '644_mtakf6bx.webp','645_mtakf6jy.webp','646_mtakf6lh.webp','647_mtakf6lm.webp','648_mtakf6nn.webp',
+                  '649_mtakf6oh.webp','650_mtakf6oy.webp','651_mtakf6qe.webp','652_mtakf6qk.webp','653_mtakf6qm.webp',
+                  '654_mtakf6tx.webp','655_mtakf6yx.webp','661_mtakf8ln.webp','662_mtakf8nn.webp','663_mtakf9an.webp','664_mtakf9hn.webp'
+              ],
+              'mia': ['429_masam2lk.webp','430_masam2nn.webp','431_masam2yk.webp'],
+              'chloe': ['513_mkyou2dm.webp','514_mkyou2ie.webp','515_mkyou2km.webp','516_mkyou2lm.webp','517_mkyou2mn.webp','518_mkyou2nm.webp','519_mkyou2nn.webp','520_mkyou2on.webp','521_mkyou2pm.webp','522_mkyou2qn.webp','523_mkyou2vn.webp','524_mkyou2yn.webp'],
+              'naomi': ['453_mkeik1nk.webp','454_mkeik1qd.webp','455_mkeik1qm.webp','456_mkeik1ym.webp'],
+              'lila': ['606_masuk2hf.webp','607_masuk2ie.webp','608_masuk2ir.webp','609_masuk2je.webp','610_masuk2jr.webp','611_masuk2nk.webp','612_masuk2ss.webp'],
+              'rhea': ['504_NAT_001.webp','505_NAT_002.webp','506_NAT_003.webp','507_NAT_004.webp','508_NAT_005.webp','509_NAT_006.webp','510_NAT_007.webp'],
+          }
+
+          primary = {
+              'avery':'627_mtakf2hf.webp',
+              'mia':'429_masam2lk.webp',
+              'chloe':'513_mkyou2dm.webp',
+              'naomi':'454_mkeik1qd.webp',
+              'lila':'606_masuk2hf.webp',
+              'rhea':'507_NAT_004.webp',
+          }
+
+          manifest = {'version':1,'identity_model':'wishbound_native','backgrounds':[],'props':[],'characters':{}}
+
+          for name in backgrounds:
+              p = by_name[name]
+              dest = out/'backgrounds'/name.lower()
+              shutil.copy2(p,dest)
+              manifest['backgrounds'].append({
+                  'id': f"WB-BG-{len(manifest['backgrounds'])+1:03d}",
+                  'runtime_path': dest.as_posix().replace('game/',''),
+                  'sha256': hashlib.sha256(dest.read_bytes()).hexdigest(),
+              })
+
+          for name in safe_props:
+              p = by_name.get(name)
+              if not p: raise SystemExit(f'Missing reviewed prop {name}')
+              dest = out/'props'/name.lower()
+              shutil.copy2(p,dest)
+              manifest['props'].append({
+                  'id': f"WB-PROP-{len(manifest['props'])+1:03d}",
+                  'runtime_path': dest.as_posix().replace('game/',''),
+                  'sha256': hashlib.sha256(dest.read_bytes()).hexdigest(),
+              })
+
+          def write_primary(route, source):
+              im = Image.open(source).convert('RGBA')
+              bbox = im.getchannel('A').getbbox()
+              if bbox:
+                  im = im.crop(bbox)
+              scale = min(520/im.width, 660/im.height)
+              size=(max(1,round(im.width*scale)),max(1,round(im.height*scale)))
+              im=im.resize(size,Image.Resampling.LANCZOS)
+              canvas=Image.new('RGBA',(540,680),(0,0,0,0))
+              canvas.alpha_composite(im,((540-im.width)//2,680-im.height))
+              dest=Path('game/images/characters')/f'{route}.png'
+              canvas.save(dest,optimize=True)
+              return dest
+
+          for route, names in routes.items():
+              rdir=out/'characters'/route
+              rdir.mkdir(parents=True)
+              rows=[]
+              for idx,name in enumerate(names,1):
+                  p=by_name.get(name)
+                  if not p: raise SystemExit(f'Missing reviewed character variant {name}')
+                  ext=p.suffix.lower()
+                  dest=rdir/f'{route}_{idx:02d}{ext}'
+                  shutil.copy2(p,dest)
+                  rows.append({
+                      'id':f'WB-{route.upper()}-{idx:02d}',
+                      'runtime_path':dest.as_posix().replace('game/',''),
+                      'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),
+                  })
+              p=by_name[primary[route]]
+              primary_dest=write_primary(route,p)
+              manifest['characters'][route]={
+                  'primary': primary_dest.as_posix().replace('game/',''),
+                  'variants': rows,
+                  'publication_state':'reviewed_nonexplicit_adult_route',
+              }
+
+          Path('asset_library/real_assets_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+          Path('asset_library/real_assets_summary.json').write_text(json.dumps({
+              'dropbox_source_files':3008,
+              'imported_backgrounds':len(manifest['backgrounds']),
+              'imported_props':len(manifest['props']),
+              'imported_character_variants':sum(len(v['variants']) for v in manifest['characters'].values()),
+              'imported_total':len(manifest['backgrounds'])+len(manifest['props'])+sum(len(v['variants']) for v in manifest['characters'].values()),
+              'excluded_from_public_build':'sexual_or_age_ambiguous_material',
+          },indent=2),encoding='utf-8')
+          print(Path('asset_library/real_assets_summary.json').read_text())
+          PY
+
+      - name: Install real assets into runtime
+        shell: bash
+        run: |
+          cat > game/zzzz_real_assets.rpy <<'RPY'
+          # Wishbound v0.6 - Dropbox real-asset runtime layer.
+
+          init -10 python:
+              def wb_real_bg(path):
+                  return Composite(
+                      (1280, 720),
+                      (0, 0), Solid("#07050a"),
+                      (160, 0), Transform(path, xysize=(960, 720))
+                  )
+
+              WB_REAL_BACKGROUNDS = sorted([
+                  f for f in renpy.list_files()
+                  if f.startswith("images/real_assets/backgrounds/")
+              ])
+              WB_REAL_PROPS = sorted([
+                  f for f in renpy.list_files()
+                  if f.startswith("images/real_assets/props/")
+              ])
+              WB_REAL_CHARACTER_VARIANTS = {
+                  rid: sorted([
+                      f for f in renpy.list_files()
+                      if f.startswith("images/real_assets/characters/{}/".format(rid))
+                  ])
+                  for rid in ("avery","mia","chloe","naomi","lila","rhea")
+              }
+
+          image bg title = wb_real_bg("images/real_assets/backgrounds/h_181.webp")
+          image bg void = wb_real_bg("images/real_assets/backgrounds/h_292.webp")
+          image bg bedroom = wb_real_bg("images/real_assets/backgrounds/h_040.webp")
+          image bg bathroom = wb_real_bg("images/real_assets/backgrounds/h_260.webp")
+          image bg closet = wb_real_bg("images/real_assets/backgrounds/h_201.webp")
+          image bg phone = wb_real_bg("images/real_assets/props/405_551.webp")
+          image bg kitchen = wb_real_bg("images/real_assets/backgrounds/h_351.webp")
+          image bg city = wb_real_bg("images/real_assets/backgrounds/h_180.webp")
+          image bg event_venue = wb_real_bg("images/real_assets/backgrounds/h_160.webp")
+          image bg office_lobby = wb_real_bg("images/real_assets/backgrounds/h_380.webp")
+          image bg photo_studio = wb_real_bg("images/real_assets/backgrounds/h_153.webp")
+          image bg tattoo_studio = wb_real_bg("images/real_assets/backgrounds/h_251.webp")
+          image bg cafe = wb_real_bg("images/real_assets/backgrounds/h_351.webp")
+          image bg rooftop_club = wb_real_bg("images/real_assets/backgrounds/h_341.webp")
+
+          screen reality_select():
+              modal True
+              add wb_real_bg("images/real_assets/backgrounds/h_292.webp")
+              add Solid("#08050bc8")
+              vbox:
+                  xalign .5 yalign .5 spacing 15
+                  text "HOW DOES REALITY ANSWER?" size 42 bold True xalign .5
+                  text "Choose the adult life reality rewrites around you." size 20 color "#d2c4d8" xalign .5
+                  grid 3 2:
+                      spacing 14
+                      xalign .5
+                      use asset_route_card('avery','Avery Lane',26,'Event planner. Social confidence and a complicated flirtation.','images/characters/avery.png')
+                      use asset_route_card('mia','Mia Hart',29,'Consultant. Married life expects instant familiarity.','images/characters/mia.png')
+                      use asset_route_card('chloe','Chloe Vale',25,'Creator. Public confidence, fiancé, and cameras everywhere.','images/characters/chloe.png')
+                      use asset_route_card('naomi','Naomi Cross',33,'Tattoo artist. Studio owner with an unresolved ex.','images/characters/naomi.png')
+                      use asset_route_card('lila','Lila Morgan',28,'Pastry chef. Secret girlfriend and a busy café staff.','images/characters/lila.png')
+                      use asset_route_card('rhea','Rhea Park',30,'DJ/club manager. Nightlife reputation and a knowing bartender.','images/characters/rhea.png')
+
+          screen main_menu():
+              tag menu
+              add wb_real_bg("images/real_assets/backgrounds/h_181.webp")
+              add Solid("#07040a66")
+              frame:
+                  xalign .82 yalign .54
+                  background Solid("#0b0810e8")
+                  padding (32, 28)
+                  vbox:
+                      spacing 11
+                      text "WISHBOUND" size 54 bold True color "#fff5ff"
+                      text "Her Morning" size 27 color "#df8bdd"
+                      text "v0.6.0 • Real Asset Library" size 17 color "#bcaec0"
+                      null height 5
+                      textbutton "START" action Start() xsize 360
+                      textbutton "REAL ASSET LIBRARY" action ShowMenu('real_asset_gallery') xsize 360
+                      textbutton "LOAD" action ShowMenu('load') xsize 360
+                      textbutton "PREFERENCES" action ShowMenu('preferences') xsize 360
+                      textbutton "QUIT" action Quit(confirm=True) xsize 360
+
+          screen quick_menu():
+              zorder 100
+              if quick_menu:
+                  hbox:
+                      xalign .992 yalign .988 spacing 7
+                      textbutton "Back" action Rollback() text_size 17
+                      textbutton "Save" action ShowMenu('save') text_size 17
+                      textbutton "Load" action ShowMenu('load') text_size 17
+                      textbutton "Assets" action ShowMenu('real_asset_gallery') text_size 17
+                      textbutton "Prefs" action ShowMenu('preferences') text_size 17
+                      textbutton "Menu" action ShowMenu('main_menu') text_size 17
+
+          screen real_asset_gallery():
+              tag menu
+              use game_menu("Real Asset Library"):
+                  viewport:
+                      xfill True
+                      ymaximum 540
+                      draggable True
+                      mousewheel True
+                      scrollbars "vertical"
+                      vbox:
+                          spacing 15
+                          text "CHARACTER VARIANTS" size 30 bold True color "#ef9bea"
+                          for rid, nm in [
+                              ("avery","Avery Lane"),("mia","Mia Hart"),("chloe","Chloe Vale"),
+                              ("naomi","Naomi Cross"),("lila","Lila Morgan"),("rhea","Rhea Park")]:
+                              text "{} — {} variants".format(nm, len(WB_REAL_CHARACTER_VARIANTS[rid])) size 23 bold True
+                              vpgrid:
+                                  cols 6
+                                  spacing 7
+                                  xfill True
+                                  ysize 185
+                                  draggable True
+                                  mousewheel True
+                                  for p in WB_REAL_CHARACTER_VARIANTS[rid]:
+                                      button:
+                                          xsize 150 ysize 175
+                                          action Show("real_asset_viewer", path=p)
+                                          background Solid("#211729")
+                                          add Transform(p, fit="contain", xysize=(140,165)) xalign .5 yalign .5
+                          text "ENVIRONMENTS" size 30 bold True color "#ef9bea"
+                          vpgrid:
+                              cols 4
+                              spacing 10
+                              xfill True
+                              for p in WB_REAL_BACKGROUNDS:
+                                  button:
+                                      xsize 240 ysize 160
+                                      action Show("real_asset_viewer", path=p)
+                                      add Transform(p, xysize=(230,150)) xalign .5 yalign .5
+                          text "PROPS / UI" size 30 bold True color "#ef9bea"
+                          grid 5 2:
+                              spacing 10
+                              for p in WB_REAL_PROPS:
+                                  button:
+                                      xsize 190 ysize 160
+                                      action Show("real_asset_viewer", path=p)
+                                      add Transform(p, xysize=(180,150)) xalign .5 yalign .5
+
+          screen real_asset_viewer(path):
+              modal True
+              zorder 250
+              add Solid("#050307ee")
+              frame:
+                  xalign .5 yalign .5
+                  xsize 1220 ysize 680
+                  background Solid("#100b15fa")
+                  fixed:
+                      xfill True yfill True
+                      add Transform(path, fit="contain", xysize=(1120,610)) xalign .5 yalign .45
+                      textbutton "Close" action Hide("real_asset_viewer") xalign .98 yalign .98
+          RPY
+
+      - name: Set v0.6.0 metadata
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          p=Path('game/options.rpy')
+          s=p.read_text()
+          s=re.sub(r'define config.version = "[^"]+"','define config.version = "0.6.0"',s)
+          p.write_text(s)
+
+          p=Path('android.json')
+          d=json.loads(p.read_text())
+          d['version']='0.6.0'
+          d['numeric_version']=10
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          PY
+
+      - name: Remove temporary sprite placeholders from runtime
+        shell: bash
+        run: |
+          rm -f game/images/sprite_avery_lane.png game/images/sprite_mia_hart.png game/images/sprite_chloe_vale.png
+          rm -f game/images/sprite_naomi_cross.png game/images/sprite_lila_morgan.png game/images/sprite_rhea_park.png
+          rm -f .github/workflows/test-dropbox-source.yml
+
+      - name: Commit real asset library
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wishbound-real-assets-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync reviewed Dropbox real asset library [skip ci]"
+            git push origin HEAD:main
+          fi
+
+      - name: Materialize Android config
+        run: cp android.json .android.json
+
+      - name: Create temporary sideload signing key
+        shell: bash
+        run: |
+          keytool -genkeypair -v \
+            -keystore "$GITHUB_WORKSPACE/android.keystore" \
+            -storepass android \
+            -alias android \
+            -keypass android \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Wishbound CI,O=Wishbound,C=US"
+
+      - name: Install Ren'Py, RAPT, and Android SDK
+        uses: Ayowel/renpy-setup-action@v3
+        with:
+          action: install
+          version: '8.5.3'
+          dlc: rapt
+          android_sdk: true
+          android_properties: |
+            key.alias=android
+            key.store.password=android
+            key.alias.password=android
+            key.store=${{ github.workspace }}/android.keystore
+
+      - name: Lint Ren'Py project
+        uses: Ayowel/renpy-setup-action@v3
+        with:
+          action: lint
+
+      - name: Clean RAPT temporary build directory
+        shell: bash
+        run: |
+          rm -rf "$HOME/.renpy_exec/tmp/android.dist" target
+          mkdir -p target
+
+      - name: Build universal APK
+        uses: Ayowel/renpy-setup-action@v3
+        with:
+          action: android_build
+          build_type: apk
+          out_dir: target
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wishbound-v0.6.0-real-assets
+          path: target/**/*.apk
+          if-no-files-found: error
