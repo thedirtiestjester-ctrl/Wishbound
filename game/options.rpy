@@ -22,3 +22,5 @@ init python:
     build.classify('game/images/**', 'archive')
     build.classify('game/gui/**', 'archive')
     build.documentation('*.md')
+
+# Sanitized redistributable build trigger v0.5.2
