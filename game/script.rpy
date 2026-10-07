@@ -238,6 +238,7 @@ label start:
             $ persistent.spice_mode = True
         "Use milder reaction lines":
             $ persistent.spice_mode = False
+    window hide
     $ protagonist_id = renpy.call_screen("protagonist_select")
     $ original = PROTAGONISTS[protagonist_id].copy()
     $ original_name = original["name"]
@@ -265,6 +266,7 @@ label start:
     wish "Let's find out what kind of woman reality thinks you asked to become."
 
     $ quick_menu = False
+    window hide
     $ reality_id = renpy.call_screen("reality_select")
     $ apply_rewrite(protagonist_id, reality_id)
     $ seen_mirror = False
