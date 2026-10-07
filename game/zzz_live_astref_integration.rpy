@@ -76,8 +76,7 @@ screen wb_route_card(rid, nm, age, blurb):
             add Solid("#09060b99")
             add Transform(WB_ROUTE_SPRITES[rid], fit="contain", xysize=(145, 195)) xalign .17 yalign .96
             frame:
-                xalign .5 yalign .5
-                xalign .73
+                xalign .73 yalign .5
                 xsize 225 ysize 205
                 background Solid("#0a0710b8")
                 padding (12, 13)
