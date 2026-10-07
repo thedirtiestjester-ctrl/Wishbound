@@ -1,0 +1,47 @@
+name: Import Reviewed AstRef Safe Pack
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/import-reviewed-astref-safe.yml'
+  workflow_dispatch:
+
+jobs:
+  import-safe-pack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download reviewed source parts
+        shell: bash
+        env:
+          PART_008: https://uc56d1f363d09ccc9b598f31b408.dl.dropboxusercontent.com/cd/0/get/DJi-3ECdhdwp_mV-sHoV729Gi_RZfJk-buLu6itiU53akaGQCL7i5GWKie6x8XpyFGVaNYbkrtzKcF6MHbzO1GsOiZEWsJPQGZYYSN2yH55naeNx7MDAtu2OkNbVVPdpcIFvad9PZYRNYqGj-qE3VJKV8kHOmrSjZ2Gfteykkb5cjg/file?c_luid=1f041b3d
+          PART_009: https://uc61b3f7bfd7ebe3946150296db9.dl.dropboxusercontent.com/cd/0/get/DJjhzBh44Wsv0dwmogyyfChMP-v92fhNleI7qoz_oBg3uDIMowDSy_Kf9DpY1QPg8Eq84ix4ai1YlYCtEdQSyZyLOz1JhewGcXruq8VGbTjEJGwkJf_CYeJm1pedcuWfoWVSBLHcTuM4_4_B2exMF_U-OH6BakCVtqdxeWcRLdMCdg/file?c_luid=1f041b3d
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astref
+          curl -fL --retry 3 --retry-delay 2 "$PART_008" -o /tmp/astref/Wbasts_Part_008.zip
+          curl -fL --retry 3 --retry-delay 2 "$PART_009" -o /tmp/astref/Wbasts_Part_009.zip
+
+      - name: Extract reviewed Wishbound-safe assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/extract_safe_astref_pack.py /tmp/astref/Wbasts_Part_008.zip /tmp/astref/Wbasts_Part_009.zip
+          test "$(find game/images/astref_safe -type f | wc -l)" -eq 76
+
+      - name: Commit reviewed asset pack
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wishbound-astref-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add game/images/astref_safe AstRef/manifests/packaged_safe_assets.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Import 76 reviewed Wishbound AstRef assets"
+            git push origin HEAD:main
+          fi
