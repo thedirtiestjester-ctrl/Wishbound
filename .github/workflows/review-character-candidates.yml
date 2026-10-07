@@ -60,7 +60,7 @@ jobs:
                       bbox=a.getbbox()
                       if not bbox: continue
                       bw,bh=bbox[2]-bbox[0],bbox[3]-bbox[1]
-                      alpha_pixels=sum(1 for p in a.getdata() if p<250)
+                      alpha_pixels=sum(a.histogram()[:250])
                       transparent_ratio=alpha_pixels/(w*hgt)
                       # Character-layer candidates: meaningful transparency, portrait/tall bounds.
                       if transparent_ratio < .08 or bh < 300 or bh < bw*1.15: continue
